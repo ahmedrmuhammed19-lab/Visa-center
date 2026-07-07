@@ -276,6 +276,9 @@
     font-size:14px;
     color:#3a4055;
   }
+  .card .row > span:not(.tag){
+    white-space:pre-line;
+  }
   .card .row .tag{
     flex-shrink:0;
     width:70px;
@@ -622,7 +625,7 @@ const DATA = [
   {
     country: "Morocco",
     branches: [
-      { name: "Morocco Embassy - Cairo", city: "Cairo", address: "10, Salah Eddine Street, Zamalek Cairo, Egypt", phone: "Not available", visaCenter: "Embassy", reference: "Not available", mapLink: "https://maps.app.goo.gl/CjZYK5pNNSce5UZ98", workingHours: ".تقديم طلبات التأشيرة يوم الاحد من الساعه 9 صباحاً الي 2 بعد الظهر - استلام الجوازات من الساعه 12 ظهراً الي الساعه 2 بعد الظهر.." }
+      { name: "Morocco Embassy - Cairo", city: "Cairo", address: "10, Salah Eddine Street, Zamalek, Cairo, Egypt", phone: "Not available", visaCenter: "Embassy", reference: "Not available", mapLink: "https://maps.app.goo.gl/CjZYK5pNNSce5UZ98", workingHours: "• تقديم طلبات التأشيرة: يوم الأحد من الساعة 9 صباحًا إلى 2 ظهرًا\n\n• استلام الجوازات: من الساعة 12 ظهرًا إلى 2 عصرًا" }
     ]
   },
   {
@@ -785,22 +788,22 @@ function onBranchChange(){
       <div class="row"><span class="tag">City</span><span>${b.city}</span></div>
       <div class="row"><span class="tag">Visa Center</span><span>${b.visaCenter}</span></div>
       <div class="row"><span class="tag">Address</span><span>${b.address}</span></div>
-      <div class="row"><span class="tag">Map Location</span><span><a href="${b.mapLink}" target="_blank" rel="noopener">${b.mapLink}</a></span></div>
+      <div class="row"><span class="tag">Map Location</span><span>${/^https?:\/\//.test(b.mapLink) ? `<a href="${b.mapLink}" target="_blank" rel="noopener">${b.mapLink}</a>` : (b.mapLink || 'Not available')}</span></div>
       <div class="row"><span class="tag">Working Hours</span><span>${b.workingHours || '—'}</span></div>
       <div class="row"><span class="tag">Phone</span><span class="phone">${b.phone}</span>
-        <button class="copy-btn" data-copy="${escAttr(b.phone)}">Copy</button>
+        ${b.phone && b.phone.toLowerCase() !== 'not available' ? `<button class="copy-btn" data-copy="${escAttr(b.phone)}">Copy</button>` : ''}
       </div>
-      <div class="row"><span class="tag">Reference</span><span><a href="${b.reference}" target="_blank" rel="noopener">${b.reference}</a></span>
-        <button class="copy-btn" data-copy="${escAttr(b.reference)}">Copy</button>
+      <div class="row"><span class="tag">Reference</span><span>${/^https?:\/\//.test(b.reference) ? `<a href="${b.reference}" target="_blank" rel="noopener">${b.reference}</a>` : (b.reference || 'Not available')}</span>
+        ${/^https?:\/\//.test(b.reference) ? `<button class="copy-btn" data-copy="${escAttr(b.reference)}">Copy</button>` : ''}
       </div>
     </div>
 
     <div class="card client-card">
       <h3>Send to Client</h3>
       <div class="row"><span class="tag">Address</span><span>${b.address}</span></div>
-      <div class="row"><span class="tag">Map Location</span><span><a href="${b.mapLink}" target="_blank" rel="noopener">${b.mapLink}</a></span></div>
+      <div class="row"><span class="tag">Map Location</span><span>${/^https?:\/\//.test(b.mapLink) ? `<a href="${b.mapLink}" target="_blank" rel="noopener">${b.mapLink}</a>` : (b.mapLink || 'Not available')}</span></div>
       <div class="row"><span class="tag">Working Hours</span><span>${b.workingHours || '—'}</span></div>
-      <button class="copy-btn copy-all-btn" data-copy="${escAttr('Address: ' + b.address + '\n\nGoogle Maps: ' + b.mapLink + '\n\nWorking Hours: ' + (b.workingHours || ''))}">Copy Address + Location</button>
+      <button class="copy-btn copy-all-btn" data-copy="${escAttr('Address: ' + b.address + '\n\nGoogle Maps: ' + b.mapLink + '\n\nWorking Hours:\n' + (b.workingHours || ''))}">Copy Address + Location</button>
     </div>
   `;
 }
