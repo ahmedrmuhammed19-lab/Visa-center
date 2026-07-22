@@ -348,9 +348,78 @@
     color:#9aa0ab;
     font-family:'IBM Plex Mono',monospace;
   }
+  /* ---------- Head Office quick-copy pill ---------- */
+  .ho-pill{
+    all:unset;
+    box-sizing:border-box;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    max-width:580px;
+    width:100%;
+    margin:0 auto 34px;
+    padding:14px 22px;
+    background:#fff;
+    border:1.5px solid var(--line);
+    border-radius:999px;
+    box-shadow:0 1px 3px rgba(15,44,80,.06);
+    transition:border-color .18s, box-shadow .18s, transform .12s;
+  }
+  .ho-pill:hover{
+    border-color:var(--gold);
+    box-shadow:0 8px 20px rgba(201,150,44,.16);
+  }
+  .ho-pill:active{ transform:scale(.98); }
+  .ho-pill-icon{
+    flex-shrink:0;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:var(--ink-2);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .ho-pill-icon svg{ width:15px; height:15px; }
+  .ho-pill-text{
+    flex:1;
+    min-width:0;
+    text-align:start;
+    font-size:14px;
+    font-weight:600;
+    color:var(--ink-2);
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .ho-pill-divider{
+    flex-shrink:0;
+    width:1px;
+    height:20px;
+    background:var(--line);
+  }
+  .ho-pill-action{
+    flex-shrink:0;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:.3px;
+    color:var(--gold);
+    white-space:nowrap;
+  }
+  .ho-pill.copied{ border-color:var(--gold); }
+  .ho-pill.copied .ho-pill-action{ color:var(--ink-2); }
+  @media (max-width:560px){
+    .ho-pill{ padding:12px 16px; gap:8px; }
+    .ho-pill-text{ font-size:12.5px; }
+    .ho-pill-action{ font-size:10.5px; }
+  }
 </style>
+
 </head>
 <body>
+
 
 <header>
   <div class="brand">
@@ -367,7 +436,17 @@
   </div>
 </header>
 
+
 <main>
+  <button type="button" id="headOfficeCopyBtn" class="ho-pill">
+    <span class="ho-pill-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    </span>
+    <span class="ho-pill-text">Global EIS – Head Office Address</span>
+    <span class="ho-pill-divider"></span>
+    <span class="ho-pill-action">Click here to copy</span>
+  </button>
+
   <div class="intro">
     <h2>Find a branch</h2>
     <p>Select a country, then choose a branch to see its details.</p>
@@ -815,6 +894,50 @@ function onBranchChange(){
 }
 
 branchSelect.addEventListener('change', onBranchChange);
+
+const headOfficeCopyBtn = document.getElementById('headOfficeCopyBtn');
+headOfficeCopyBtn.addEventListener('click', function(){
+  const text =
+    'Global EIS – Head Office:\n\n' +
+    '• Address: B Square, Entrance (C), 5th Floor, El-Nasr Road, Al Manteqah Al Oula, Nasr City, Cairo Governorate 11765 (next to Taiba Mall, near the first Abbas Bridge on El-Nasr Road)\n' +
+    '• Working Hours: Saturday to Thursday, 10:00 AM to 7:00 PM (excluding official holidays)\n' +
+    '• Map Location: https://maps.app.goo.gl/daqfBDTyvVoHNnQf7\n\n' +
+    '• العنوان: B Square، مدخل (C)، الدور الخامس، طريق النصر، المنطقة الأولى، مدينة نصر، القاهرة (بجوار طيبة مول، بالقرب من أول كوبري عباس على طريق النصر)\n' +
+    '• مواعيد العمل: من السبت إلى الخميس، من الساعة 10:00 صباحًا حتى 7:00 مساءً (ما عدا الإجازات الرسمية)\n' +
+    '• الموقع: https://maps.app.goo.gl/daqfBDTyvVoHNnQf7';
+
+  const actionEl = headOfficeCopyBtn.querySelector('.ho-pill-action');
+  function showCopied(){
+    const original = actionEl.textContent;
+    actionEl.textContent = 'Copied ✓';
+    headOfficeCopyBtn.classList.add('copied');
+    setTimeout(() => {
+      actionEl.textContent = original;
+      headOfficeCopyBtn.classList.remove('copied');
+    }, 1400);
+  }
+  function fallbackCopy(){
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try{
+      document.execCommand('copy');
+      showCopied();
+    }catch(err){
+      alert('تعذر النسخ تلقائيًا، برجاء النسخ يدويًا:\n' + text);
+    }
+    document.body.removeChild(ta);
+  }
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(showCopied).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+});
 
 init();
 </script>
