@@ -691,7 +691,8 @@ const DATA = [
   {
     country: "China",
     branches: [
-      { name: "China Visa Center - Cairo", city: "Cairo", address: "2ndFloor, City Capital Building, 6 Agriculture st., Dokki-Giza", phone: "02 37483425/27/28", visaCenter: "VFS GLOBAL", reference: "https://www.visaforchina.cn/CAI3_EN/guanyuwomen/bangongshijianjidizhi", mapLink: "https://share.google/05qXktI3eXiumHPQw", workingHours: "Sun-Thu 09:00 AM to 04:00 PM" }
+      { name: "China Visa Center - Cairo", city: "Cairo", address: "2ndFloor, City Capital Building, 6 Agriculture st., Dokki-Giza", phone: "02 37483425/27/28", visaCenter: "VFS GLOBAL", reference: "https://www.visaforchina.cn/CAI3_EN/guanyuwomen/bangongshijianjidizhi", mapLink: "https://share.google/05qXktI3eXiumHPQw", workingHours: "Sun-Thu 09:00 AM to 04:00 PM" },
+      { name: "China Visa Center - Alexandria", city: "Alexandria", address: "1st Floor, Building No. 2, Al Baraka Compound, 80 Galal El Dessouky Street, Alexandria, Egypt", phone: "02 37483425/27/28", visaCenter: "VFS GLOBAL", reference: "https://www.visaforchina.cn/ALY3_EN/guanyuwomen/bangongshijianjidizhi", mapLink: "https://maps.app.goo.gl/7RS5L9ovrudiZBAe9", workingHours: "Sun-Thu 09:00 AM to 04:00 PM" }
     ]
   },
   {
@@ -717,6 +718,12 @@ const DATA = [
     country: "Japan",
     branches: [
       { name: "Embassy of Japan in Cairo", city: "Cairo", address: "81 Corniche El Nil Street, Maadi, Cairo, Egypt P.O.Box 500, Maadi", phone: "01501718276", visaCenter: "Embassy", reference: "https://www.eg.emb-japan.go.jp/itpr_en/visa_reentry_covid19.html", mapLink: "https://maps.app.goo.gl/N53vU8iDkP5XjErr9", workingHours: "Sun-Thu 09:00 AM to 02:00 PM" }
+    ]
+  },
+  {
+    country: "Mexico",
+    branches: [
+      { name: "Mexico Embassy", city: "Cairo", address: "25, Maadi as Sarayat Al Gharbeyah, Maadi, Cairo Governorate 11431", phone: "23580256 - 23580258 - 23580259", visaCenter: "Embassy", reference: "https://shorturl.at/S6RI2", mapLink: "https://share.google/qeGBZPKJvXTg2bYUJ", workingHours: "Mon-Thu 09:30 AM - 1:00 PM" }
     ]
   },
 ];
@@ -898,13 +905,15 @@ branchSelect.addEventListener('change', onBranchChange);
 const headOfficeCopyBtn = document.getElementById('headOfficeCopyBtn');
 headOfficeCopyBtn.addEventListener('click', function(){
   const text =
-    'Global EIS – Head Office:\n\n' +
-    '• Address: B Square, Entrance (C), 5th Floor, El-Nasr Road, Al Manteqah Al Oula, Nasr City, Cairo Governorate 11765 (next to Taiba Mall, near the first Abbas Bridge on El-Nasr Road)\n' +
-    '• Working Hours: Saturday to Thursday, 10:00 AM to 7:00 PM (excluding official holidays)\n' +
-    '• Map Location: https://maps.app.goo.gl/daqfBDTyvVoHNnQf7\n\n' +
-    '• العنوان: B Square، مدخل (C)، الدور الخامس، طريق النصر، المنطقة الأولى، مدينة نصر، القاهرة (بجوار طيبة مول، بالقرب من أول كوبري عباس على طريق النصر)\n' +
-    '• مواعيد العمل: من السبت إلى الخميس، من الساعة 10:00 صباحًا حتى 7:00 مساءً (ما عدا الإجازات الرسمية)\n' +
-    '• الموقع: https://maps.app.goo.gl/daqfBDTyvVoHNnQf7';
+    'المقر الرئيسي – Global EIS\n\n' +
+    '📍 العنوان: B Square، مدخل C، الدور الخامس، طريق النصر، مدينة نصر (بجوار طيبة مول، بالقرب من أول كوبري عباس العقاد)\n\n' +
+    '🕙 مواعيد العمل: السبت إلى الخميس | 10:00 ص – 7:00 م (ما عدا الإجازات الرسمية)\n\n' +
+    '📍 الموقع: https://maps.app.goo.gl/daqfBDTyvVoHNnQf7\n\n' +
+    'ــــــــــــــــــــــ\n\n' +
+    'Global EIS – Head Office\n\n' +
+    '📍 Address: B Square, Entrance C, 5th Floor, El-Nasr Rd., Nasr City (Next to Taiba Mall, near the First Abbas El Akkad Bridge)\n\n' +
+    '🕙 Working Hours: Saturday–Thursday | 10:00 AM – 7:00 PM (Except official holidays)\n\n' +
+    '📍 Location: https://maps.app.goo.gl/daqfBDTyvVoHNnQf7';
 
   const actionEl = headOfficeCopyBtn.querySelector('.ho-pill-action');
   function showCopied(){
