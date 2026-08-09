@@ -691,8 +691,8 @@ const DATA = [
   {
     country: "China",
     branches: [
-      { name: "China Visa Center - Cairo", city: "Cairo", address: "2ndFloor, City Capital Building, 6 Agriculture st., Dokki-Giza", phone: "02 37483425/27/28", visaCenter: "VFS GLOBAL", reference: "https://www.visaforchina.cn/CAI3_EN/guanyuwomen/bangongshijianjidizhi", mapLink: "https://share.google/05qXktI3eXiumHPQw", workingHours: "Sun-Thu 09:00 AM to 04:00 PM" },
-      { name: "China Visa Center - Alexandria", city: "Alexandria", address: "1st Floor, Building No. 2, Al Baraka Compound, 80 Galal El Dessouky Street, Alexandria, Egypt", phone: "02 37483425/27/28", visaCenter: "VFS GLOBAL", reference: "https://www.visaforchina.cn/ALY3_EN/guanyuwomen/bangongshijianjidizhi", mapLink: "https://maps.app.goo.gl/7RS5L9ovrudiZBAe9", workingHours: "Sun-Thu 09:00 AM to 04:00 PM" }
+      { name: "China Visa Center - Cairo", city: "Cairo", address: "2ndFloor, City Capital Building, 6 Agriculture st., Dokki-Giza", phone: "02 37483425/27/28", visaCenter: "VFS GLOBAL", reference: "https://www.visaforchina.cn/CAI3_EN/guanyuwomen/bangongshijianjidizhi", mapLink: "https://share.google/05qXktI3eXiumHPQw", workingHours: "Sun-Thu 09:00 AM to 04:00 PM", submissionHours: "Submission of applications: 9:00 AM to 12:00 PM" },
+      { name: "China Visa Center - Alexandria", city: "Alexandria", address: "1st Floor, Building No. 2, Al Baraka Compound, 80 Galal El Dessouky Street, Alexandria, Egypt", phone: "02 37483425/27/28", visaCenter: "VFS GLOBAL", reference: "https://www.visaforchina.cn/ALY3_EN/guanyuwomen/bangongshijianjidizhi", mapLink: "https://maps.app.goo.gl/7RS5L9ovrudiZBAe9", workingHours: "Sun-Thu 09:00 AM to 04:00 PM", submissionHours: "Submission of applications: 9:00 AM to 12:00 PM" }
     ]
   },
   {
@@ -895,7 +895,8 @@ function onBranchChange(){
       <div class="row"><span class="tag">Address</span><span>${b.address}</span></div>
       <div class="row"><span class="tag">Map Location</span><span>${/^https?:\/\//.test(b.mapLink) ? `<a href="${b.mapLink}" target="_blank" rel="noopener">${b.mapLink}</a>` : (b.mapLink || 'Not available')}</span></div>
       <div class="row"><span class="tag">Working Hours</span><span>${b.workingHours || '—'}</span></div>
-      <button class="copy-btn copy-all-btn" data-copy="${escAttr('Address: ' + b.address + '\n\nGoogle Maps: ' + b.mapLink + '\n\nWorking Hours:\n' + (b.workingHours || ''))}">Copy Address + Location</button>
+      ${b.submissionHours ? `<div class="row"><span class="tag">Submission Hours</span><span>${b.submissionHours}</span></div>` : ''}
+      <button class="copy-btn copy-all-btn" data-copy="${escAttr('Address: ' + b.address + '\n\nGoogle Maps: ' + b.mapLink + '\n\nWorking Hours:\n' + (b.workingHours || '') + (b.submissionHours ? ('\n' + b.submissionHours) : ''))}">Copy Address + Location</button>
     </div>
   `;
 }
