@@ -44,7 +44,7 @@
 }
 
 /* ============================================================
-   LIGHT THEME — based on logo (navy #143D6B + gold #C9962C)
+   LIGHT THEME — based on logo (navy #143D6B + emerald accent #10B981)
    With live RGB aurora accents (cyan, violet, pink)
    ============================================================ */
 :root {
@@ -70,8 +70,8 @@
   --muted: oklch(0.96 0.01 240);
   --muted-foreground: oklch(0.48 0.02 250);
 
-  /* Accent (gold from logo) */
-  --accent: oklch(0.78 0.14 78);
+  /* Accent (emerald — professional, complements navy) */
+  --accent: oklch(0.65 0.17 162);
   --accent-foreground: oklch(0.18 0.04 250);
 
   /* Destructive */
@@ -87,9 +87,9 @@
   --brand-navy: #143D6B;
   --brand-navy-light: #1E5490;
   --brand-navy-glow: rgba(20, 61, 107, 0.35);
-  --brand-gold: #C9962C;
-  --brand-gold-light: #E0B454;
-  --brand-gold-glow: rgba(201, 150, 44, 0.4);
+  --brand-gold: #10B981;
+  --brand-gold-light: #34D399;
+  --brand-gold-glow: rgba(16, 185, 129, 0.4);
   
   /* Live RGB accents (for aurora + glows) */
   --rgb-cyan: #00E5FF;
@@ -134,7 +134,7 @@
   --muted: oklch(0.20 0.03 255);
   --muted-foreground: oklch(0.72 0.02 240);
 
-  --accent: oklch(0.82 0.14 78);                    /* gold */
+  --accent: oklch(0.70 0.17 162);                    /* emerald */
   --accent-foreground: oklch(0.10 0.025 250);
 
   --destructive: oklch(0.65 0.22 25);
@@ -148,9 +148,9 @@
   --brand-navy: #1E5490;
   --brand-navy-light: #2E6BAB;
   --brand-navy-glow: rgba(30, 84, 144, 0.45);
-  --brand-gold: #E0B454;
-  --brand-gold-light: #F0C97A;
-  --brand-gold-glow: rgba(224, 180, 84, 0.5);
+  --brand-gold: #34D399;
+  --brand-gold-light: #6EE7B7;
+  --brand-gold-glow: rgba(52, 211, 153, 0.5);
   
   --rgb-cyan: #00E5FF;
   --rgb-violet: #9B7FFF;

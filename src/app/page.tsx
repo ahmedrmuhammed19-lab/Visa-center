@@ -679,7 +679,7 @@ export default function Home() {
         {selectedCountry && (
           <div className="mb-6 animate-fade-in-up">
             <Label className="text-xs font-mono uppercase tracking-wider text-muted-foreground mb-2 block">
-              Select a branch in {selectedCountry.name}
+              Select a branch in {selectedCountry.flag} {selectedCountry.name}
             </Label>
             <Select value={selectedBranchId} onValueChange={setSelectedBranchId}>
               <SelectTrigger className="h-12 text-base">
@@ -688,7 +688,10 @@ export default function Home() {
               <SelectContent>
                 {selectedCountry.branches.map((b) => (
                   <SelectItem key={b.id} value={b.id}>
-                    {b.name}
+                    <span className="flex items-center gap-2.5">
+                      <span className="text-lg leading-none">{selectedCountry.flag}</span>
+                      <span>{b.name}</span>
+                    </span>
                   </SelectItem>
                 ))}
               </SelectContent>
