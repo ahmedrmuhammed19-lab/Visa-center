@@ -7,13 +7,14 @@ const globalForPrisma = globalThis as unknown as {
 }
 
 function createPrismaClient() {
-  const url = process.env.DATABASE_URL
-  const authToken = process.env.DATABASE_AUTH_TOKEN
+  // Use TURSO_DATABASE_URL for the actual connection (separate from DATABASE_URL
+  // which Prisma uses for schema validation)
+  const tursoUrl = process.env.TURSO_DATABASE_URL
+  const tursoToken = process.env.DATABASE_AUTH_TOKEN
 
-  // For local SQLite (development): no token needed
   // For Turso (production): both URL and token required
-  if (url && url.startsWith('libsql://') && authToken) {
-    const libsql = createClient({ url, authToken })
+  if (tursoUrl && tursoUrl.startsWith('libsql://') && tursoToken) {
+    const libsql = createClient({ url: tursoUrl, authToken: tursoToken })
     const adapter = new PrismaLibSql(libsql)
     return new PrismaClient({ adapter })
   }
