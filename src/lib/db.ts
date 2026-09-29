@@ -1,4 +1,5 @@
 import { createClient, type Client } from '@libsql/client'
+import crypto from 'crypto'
 
 const globalForDb = globalThis as unknown as { 
   tursoClient: Client | undefined 
@@ -145,24 +146,34 @@ function table<T extends { id: string }>(name: string) {
     },
     
     async create(opts: { data: Record<string, any> }): Promise<T & any> {
-      const keys = Object.keys(opts.data)
-      const values = keys.map(k => opts.data[k])
+      const data = { ...opts.data }
+      // Auto-generate ID if not provided
+      if (!data.id) {
+        data.id = crypto.randomUUID()
+      }
+      // Auto-set createdAt/updatedAt if not provided and table has them
+      const now = new Date().toISOString()
+      if (!data.createdAt) data.createdAt = now
+      if (!data.updatedAt) data.updatedAt = now
+      
+      const keys = Object.keys(data)
+      const values = keys.map(k => data[k])
       const placeholders = keys.map(() => '?').join(', ')
       const sql = `INSERT INTO ${name} (${keys.join(', ')}) VALUES (${placeholders}) RETURNING *`
       const result = await client.execute({ sql, args: values })
-      // For create with nested creates (like country.branches), need to handle separately
       if (result.rows.length > 0) {
         return result.rows[0] as any
       }
-      // If no RETURNING support, query back
-      const lastInsert = await client.execute(`SELECT * FROM ${name} ORDER BY rowid DESC LIMIT 1`)
-      return lastInsert.rows[0] as any
+      // Fallback: query back by id
+      const fetched = await client.execute({ sql: `SELECT * FROM ${name} WHERE id = ?`, args: [data.id] })
+      return fetched.rows[0] as any
     },
     
     async update(opts: { where: Record<string, any>, data: Record<string, any> }): Promise<T & any> {
+      const data = { ...opts.data, updatedAt: new Date().toISOString() }
       const { clause: whereClause, args: whereArgs } = buildWhere(opts.where)
-      const setKeys = Object.keys(opts.data)
-      const setArgs = setKeys.map(k => opts.data[k])
+      const setKeys = Object.keys(data)
+      const setArgs = setKeys.map(k => data[k])
       const setClause = setKeys.map(k => `${k} = ?`).join(', ')
       const sql = `UPDATE ${name} SET ${setClause} ${whereClause} RETURNING *`
       const result = await client.execute({ sql, args: [...setArgs, ...whereArgs] })
