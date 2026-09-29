@@ -70,8 +70,8 @@
   --muted: oklch(0.96 0.01 240);
   --muted-foreground: oklch(0.48 0.02 250);
 
-  /* Accent (emerald — professional, complements navy) */
-  --accent: oklch(0.65 0.17 162);
+  /* Accent (RGB cyan — matches the live aurora accent) */
+  --accent: oklch(0.78 0.15 200);
   --accent-foreground: oklch(0.18 0.04 250);
 
   /* Destructive */
@@ -135,7 +135,7 @@
   --muted: oklch(0.20 0.03 255);
   --muted-foreground: oklch(0.72 0.02 240);
 
-  --accent: oklch(0.70 0.17 162);                    /* emerald */
+  --accent: oklch(0.78 0.15 200);                    /* RGB cyan */
   --accent-foreground: oklch(0.10 0.025 250);
 
   --destructive: oklch(0.65 0.22 25);
@@ -531,6 +531,25 @@ body {
   background: linear-gradient(90deg, transparent, color-mix(in oklch, var(--rgb-cyan) 15%, transparent), transparent);
   background-size: 1000px 100%;
   animation: shimmer 2s infinite;
+}
+
+/* RGB skeleton loader — animated gradient through cyan/violet/pink */
+.skeleton-rgb {
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklch, var(--rgb-cyan) 25%, transparent) 0%,
+    color-mix(in oklch, var(--rgb-violet) 25%, transparent) 25%,
+    color-mix(in oklch, var(--rgb-pink) 25%, transparent) 50%,
+    color-mix(in oklch, var(--rgb-cyan) 25%, transparent) 75%,
+    color-mix(in oklch, var(--rgb-violet) 25%, transparent) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-rgb-flow 1.8s linear infinite;
+}
+
+@keyframes skeleton-rgb-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 
 /* Input focus glow */
