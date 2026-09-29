@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#050818">
+<meta name="description" content="Global EIS Branch Directory — Visa Application Centers across Egypt and worldwide.">
+<title>Branch Directory | Global EIS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Design Tokens — 2026 Dark Navy Aesthetic
+   ============================================================ */
+:root{
+  --bg-deep:#050818;
+  --bg-navy:#0A1230;
+  --bg-navy-2:#0F1B3D;
+  --bg-card:rgba(15,27,61,0.55);
+  --bg-card-hover:rgba(25,40,80,0.75);
+  --bg-input:rgba(15,27,61,0.6);
+
+  --border-soft:rgba(123,97,255,0.18);
+  --border-cyan:rgba(0,229,255,0.45);
+  --border-violet:rgba(123,97,255,0.45);
+
+  --text-primary:#FFFFFF;
+  --text-secondary:#A8B4D8;
+  --text-muted:#6A7BA0;
+
+  --cyan:#00E5FF;
+  --violet:#7B61FF;
+  --gold:#FFD600;
+  --pink:#FF3D8B;
+  --green:#00E676;
+
+  --shadow-card:0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(123,97,255,0.06);
+  --shadow-glow-cyan:0 0 40px rgba(0,229,255,0.25);
+  --shadow-glow-violet:0 0 40px rgba(123,97,255,0.25);
+  --shadow-glow-green:0 0 30px rgba(0,230,118,0.3);
+
+  --radius:18px;
+  --radius-sm:10px;
+  --radius-pill:999px;
+
+  --t-fast:0.15s ease;
+  --t-base:0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*{box-sizing:border-box; margin:0; padding:0; }
+html,body{height:100%; }
+body{
+  background:var(--bg-deep);
+  color:var(--text-primary);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:15px;
+  line-height:1.55;
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* ============================================================
+   Live Aurora Background — animated gradient blobs
+   ============================================================ */
+.aurora{
+  position:fixed; inset:0; z-index:-3; overflow:hidden;
+  background:
+    radial-gradient(ellipse at top left, rgba(0,229,255,0.18), transparent 55%),
+    radial-gradient(ellipse at bottom right, rgba(123,97,255,0.22), transparent 55%),
+    linear-gradient(180deg, #050818 0%, #0A1230 50%, #050818 100%);
+}
+.aurora-blob{
+  position:absolute;
+  width:55vw; height:55vw;
+  max-width:680px; max-height:680px;
+  border-radius:50%;
+  filter:blur(120px);
+  will-change:transform;
+}
+.b1{ background:radial-gradient(circle,#00E5FF,transparent 70%); top:-15%; left:-10%; opacity:0.45; animation:float1 22s ease-in-out infinite; }
+.b2{ background:radial-gradient(circle,#7B61FF,transparent 70%); bottom:-15%; right:-10%; opacity:0.45; animation:float2 26s ease-in-out infinite; }
+.b3{ background:radial-gradient(circle,#FF3D8B,transparent 70%); top:40%; left:55%; opacity:0.18; animation:float3 30s ease-in-out infinite; }
+.b4{ background:radial-gradient(circle,#FFD600,transparent 70%); bottom:25%; left:15%; opacity:0.12; animation:float4 28s ease-in-out infinite; }
+
+@keyframes float1{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  50%{ transform:translate(80px,-40px) scale(1.15); }
+}
+@keyframes float2{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  50%{ transform:translate(-80px,40px) scale(1.15); }
+}
+@keyframes float3{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  50%{ transform:translate(-30%,-30%) scale(1.2); }
+}
+@keyframes float4{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  50%{ transform:translate(40px,-60px) scale(0.85); }
+}
+
+/* Subtle grid overlay */
+.grid-overlay{
+  position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(123,97,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123,97,255,0.06) 1px, transparent 1px);
+  background-size:50px 50px;
+  -webkit-mask-image:radial-gradient(ellipse at center, black 25%, transparent 75%);
+          mask-image:radial-gradient(ellipse at center, black 25%, transparent 75%);
+}
+
+/* Subtle noise texture */
+.noise{
+  position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:0.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   Layout
+   ============================================================ */
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 24px;
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(5,8,24,0.7);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-bottom:1px solid var(--border-soft);
+}
+header::after{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(90deg, transparent, rgba(0,229,255,0.06), rgba(123,97,255,0.06), transparent);
+  pointer-events:none;
+}
+.brand{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  padding:18px 0;
+  position:relative; z-index:1;
+}
+.brand-left{ display:flex; align-items:center; gap:16px; }
+.logo-badge{
+  background:linear-gradient(135deg,#ffffff,#e0e8f5);
+  padding:8px;
+  border-radius:12px;
+  box-shadow:0 4px 24px rgba(0,229,255,0.25);
+  line-height:0;
+}
+.logo-badge img{ height:32px; width:auto; display:block; }
+.brand-text{ border-left:1px solid rgba(255,255,255,0.18); padding-left:16px; }
+.brand-text h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:20px;
+  font-weight:700;
+  letter-spacing:-0.01em;
+  background:linear-gradient(135deg,#FFFFFF 30%,#A8B4D8 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.brand-text p{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--text-muted);
+  letter-spacing:0.5px;
+  margin-top:2px;
+}
+.stats{ display:flex; gap:24px; }
+.stat{
+  display:flex; align-items:baseline; gap:6px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  color:var(--text-secondary);
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+.stat b{
+  font-size:22px;
+  font-weight:700;
+  color:var(--cyan);
+  text-shadow:0 0 24px rgba(0,229,255,0.6);
+  font-family:'Space Grotesk',sans-serif;
+}
+
+/* ============================================================
+   Head Office pill
+   ============================================================ */
+.head-office{
+  margin-top:40px;
+  padding:20px 24px;
+  background:linear-gradient(135deg, rgba(15,27,61,0.75), rgba(20,35,80,0.55));
+  border:1px solid var(--border-soft);
+  border-radius:var(--radius);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  display:flex; align-items:center; gap:16px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:var(--shadow-card);
+}
+.head-office::before{
+  content:"";
+  position:absolute; left:0; top:0; bottom:0; width:3px;
+  background:linear-gradient(180deg, var(--cyan), var(--violet));
+  box-shadow:0 0 20px rgba(0,229,255,0.5);
+}
+.head-office-icon{
+  width:44px; height:44px;
+  border-radius:12px;
+  background:linear-gradient(135deg, rgba(0,229,255,0.18), rgba(123,97,255,0.18));
+  border:1px solid var(--border-cyan);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.head-office-icon svg{ width:22px; height:22px; stroke:var(--cyan); }
+.head-office-text{ flex:1; min-width:0; }
+.head-office-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+}
+.head-office-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:16px;
+  font-weight:600;
+  margin-top:2px;
+}
+.ho-pill-action{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:10px 18px;
+  border-radius:var(--radius-pill);
+  background:linear-gradient(135deg, var(--cyan), var(--violet));
+  color:var(--bg-deep);
+  font-weight:600;
+  font-size:13px;
+  cursor:pointer;
+  border:none;
+  font-family:inherit;
+  transition:all var(--t-base);
+  box-shadow:0 4px 20px rgba(0,229,255,0.35);
+  flex-shrink:0;
+}
+.ho-pill-action:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 32px rgba(0,229,255,0.5);
+}
+.head-office.copied .ho-pill-action{
+  background:linear-gradient(135deg, var(--green), #00C853);
+  color:#000;
+  box-shadow:0 4px 24px rgba(0,230,118,0.5);
+}
+
+/* ============================================================
+   Search Section
+   ============================================================ */
+.search-section{ margin-top:36px; margin-bottom:24px; }
+.section-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:30px;
+  font-weight:700;
+  letter-spacing:-0.02em;
+  margin-bottom:8px;
+  background:linear-gradient(135deg,#FFFFFF 40%,var(--cyan) 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.section-subtitle{
+  color:var(--text-secondary);
+  font-size:14px;
+  margin-bottom:24px;
+}
+.autocomplete-wrap{ position:relative; }
+.text-input{
+  width:100%;
+  padding:16px 20px 16px 52px;
+  background:var(--bg-input);
+  border:1px solid var(--border-soft);
+  border-radius:var(--radius);
+  color:var(--text-primary);
+  font-family:inherit;
+  font-size:15px;
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  transition:all var(--t-base);
+}
+.text-input::placeholder{ color:var(--text-muted); }
+.text-input:focus{
+  outline:none;
+  border-color:var(--border-cyan);
+  box-shadow:0 0 0 4px rgba(0,229,255,0.12), var(--shadow-glow-cyan);
+  background:rgba(20,35,80,0.7);
+}
+.input-icon{
+  position:absolute;
+  left:18px; top:50%;
+  transform:translateY(-50%);
+  width:20px; height:20px;
+  stroke:var(--text-muted);
+  pointer-events:none;
+  transition:stroke var(--t-base);
+}
+.text-input:focus ~ .input-icon{ stroke:var(--cyan); }
+
+.suggestions{
+  position:absolute;
+  top:calc(100% + 8px);
+  left:0; right:0;
+  background:rgba(10,18,48,0.96);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:1px solid var(--border-soft);
+  border-radius:var(--radius);
+  max-height:320px;
+  overflow-y:auto;
+  z-index:40;
+  box-shadow:0 24px 60px rgba(0,0,0,0.5);
+  display:none;
+}
+.suggestions.show{ display:block; animation:fadeIn 0.2s ease; }
+@keyframes fadeIn{ from{opacity:0; transform:translateY(-4px);} to{opacity:1; transform:translateY(0);} }
+.suggestion-item{
+  padding:14px 20px;
+  cursor:pointer;
+  border-bottom:1px solid rgba(123,97,255,0.08);
+  display:flex; align-items:center; gap:14px;
+  transition:background var(--t-fast);
+}
+.suggestion-item:last-child{ border-bottom:none; }
+.suggestion-item:hover{
+  background:linear-gradient(90deg, rgba(0,229,255,0.1), transparent);
+}
+.suggestion-flag{ font-size:22px; }
+.suggestion-name{ font-weight:500; }
+.suggestion-meta{
+  margin-left:auto;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--text-muted);
+  letter-spacing:0.5px;
+}
+
+/* ============================================================
+   Branch Step (Select)
+   ============================================================ */
+#branchStep{
+  margin-top:20px;
+  display:none;
+}
+#branchStep.show{ display:block; animation:fadeInUp 0.4s ease; }
+@keyframes fadeInUp{
+  from{ opacity:0; transform:translateY(12px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.select-wrap{ position:relative; }
+.select-wrap::after{
+  content:"";
+  position:absolute;
+  right:20px; top:50%;
+  width:9px; height:9px;
+  border-right:2px solid var(--cyan);
+  border-bottom:2px solid var(--cyan);
+  transform:translateY(-70%) rotate(45deg);
+  pointer-events:none;
+}
+#branchSelect{
+  width:100%;
+  padding:16px 52px 16px 20px;
+  background:var(--bg-input);
+  border:1px solid var(--border-soft);
+  border-radius:var(--radius);
+  color:var(--text-primary);
+  font-family:inherit;
+  font-size:15px;
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  cursor:pointer;
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  transition:all var(--t-base);
+}
+#branchSelect:focus{
+  outline:none;
+  border-color:var(--border-cyan);
+  box-shadow:0 0 0 4px rgba(0,229,255,0.12);
+}
+#branchSelect option{ background:var(--bg-navy); color:var(--text-primary); padding:12px; }
+
+/* ============================================================
+   Result Cards
+   ============================================================ */
+#resultWrap{ margin-top:24px; }
+.placeholder-hint{
+  text-align:center;
+  padding:60px 20px;
+  color:var(--text-muted);
+  font-size:14px;
+  background:rgba(15,27,61,0.3);
+  border:1px dashed var(--border-soft);
+  border-radius:var(--radius);
+}
+.card{
+  background:var(--bg-card);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid var(--border-soft);
+  border-radius:var(--radius);
+  padding:24px;
+  margin-bottom:20px;
+  box-shadow:var(--shadow-card);
+  position:relative;
+  overflow:hidden;
+  animation:fadeInUp 0.4s ease;
+}
+.card::before{
+  content:"";
+  position:absolute; left:0; top:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, var(--cyan), var(--violet), transparent);
+}
+.card h3{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:20px;
+  font-weight:600;
+  letter-spacing:-0.01em;
+  margin-bottom:18px;
+  background:linear-gradient(135deg,#FFFFFF 60%,var(--cyan) 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.client-card{
+  background:linear-gradient(135deg, rgba(0,229,255,0.08), rgba(123,97,255,0.08));
+  border:1px solid rgba(0,229,255,0.22);
+}
+.row{
+  display:flex;
+  gap:14px;
+  padding:12px 0;
+  border-bottom:1px solid rgba(123,97,255,0.08);
+  align-items:flex-start;
+}
+.row:last-child{ border-bottom:none; }
+.tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--text-muted);
+  min-width:100px;
+  padding-top:2px;
+  flex-shrink:0;
+}
+.row > span:not(.tag):not(.phone){
+  flex:1;
+  word-break:break-word;
+  min-width:0;
+}
+.row a{
+  color:var(--cyan);
+  text-decoration:none;
+  border-bottom:1px solid rgba(0,229,255,0.3);
+  transition:all var(--t-fast);
+  word-break:break-all;
+}
+.row a:hover{ color:#fff; border-bottom-color:var(--cyan); }
+.phone{ font-family:'JetBrains Mono',monospace; color:var(--cyan); }
+
+/* ============================================================
+   Action Buttons
+   ============================================================ */
+.action-row{
+  display:flex; flex-wrap:wrap; gap:8px;
+  margin-top:4px;
+}
+.copy-btn{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:8px 14px;
+  background:rgba(0,229,255,0.1);
+  border:1px solid rgba(0,229,255,0.3);
+  color:var(--cyan);
+  border-radius:var(--radius-pill);
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  cursor:pointer;
+  transition:all var(--t-base);
+  flex-shrink:0;
+}
+.copy-btn:hover{
+  background:rgba(0,229,255,0.2);
+  border-color:var(--cyan);
+  transform:translateY(-1px);
+  box-shadow:0 4px 16px rgba(0,229,255,0.25);
+}
+.copy-btn.copied{
+  background:rgba(0,230,118,0.15);
+  border-color:var(--green);
+  color:var(--green);
+}
+.copy-all-btn{
+  display:flex;
+  margin-top:18px;
+  padding:14px 24px;
+  background:linear-gradient(135deg, var(--cyan), var(--violet));
+  color:var(--bg-deep);
+  border:none;
+  font-weight:600;
+  font-size:14px;
+  border-radius:var(--radius-pill);
+  width:100%;
+  justify-content:center;
+  box-shadow:0 8px 30px rgba(0,229,255,0.3);
+  cursor:pointer;
+  font-family:inherit;
+  transition:all var(--t-base);
+}
+.copy-all-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 40px rgba(0,229,255,0.5);
+}
+
+/* WhatsApp button (small, inline) */
+.wa-btn{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:8px 14px;
+  background:linear-gradient(135deg, #00E676, #00C853);
+  border:1px solid rgba(0,230,118,0.5);
+  color:#000;
+  border-radius:var(--radius-pill);
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  cursor:pointer;
+  text-decoration:none;
+  transition:all var(--t-base);
+  flex-shrink:0;
+}
+.wa-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(0,230,118,0.4);
+  color:#000;
+}
+.wa-btn svg{ width:13px; height:13px; }
+
+/* WhatsApp big button (Send to Client) */
+.wa-all-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin-top:14px;
+  padding:14px 24px;
+  background:linear-gradient(135deg, #00E676, #00C853);
+  color:#000;
+  border:none;
+  font-weight:600;
+  font-size:14px;
+  border-radius:var(--radius-pill);
+  width:100%;
+  text-decoration:none;
+  box-shadow:0 8px 30px rgba(0,230,118,0.3);
+  transition:all var(--t-base);
+  font-family:inherit;
+  cursor:pointer;
+}
+.wa-all-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 40px rgba(0,230,118,0.5);
+  color:#000;
+}
+.wa-all-btn svg{ width:18px; height:18px; }
+
+/* ============================================================
+   Footer
+   ============================================================ */
+footer{
+  text-align:center;
+  padding:40px 24px 32px;
+  margin-top:60px;
+  border-top:1px solid var(--border-soft);
+  color:var(--text-muted);
+  font-size:12px;
+  font-family:'JetBrains Mono',monospace;
+  letter-spacing:0.5px;
+}
+footer a{ color:var(--cyan); text-decoration:none; }
+footer a:hover{ text-decoration:underline; }
+
+/* ============================================================
+   Scrollbar
+   ============================================================ */
+::-webkit-scrollbar{ width:10px; height:10px; }
+::-webkit-scrollbar-track{ background:transparent; }
+::-webkit-scrollbar-thumb{ background:rgba(123,97,255,0.3); border-radius:10px; }
+::-webkit-scrollbar-thumb:hover{ background:rgba(123,97,255,0.5); }
+
+/* ============================================================
+   Mobile
+   ============================================================ */
+@media (max-width:640px){
+  .container{ padding:0 16px; }
+  .brand{ padding:14px 0; gap:12px; }
+  .brand-left{ gap:10px; }
+  .logo-badge{ padding:6px; border-radius:10px; }
+  .logo-badge img{ height:26px; }
+  .brand-text h1{ font-size:16px; }
+  .brand-text p{ font-size:10px; }
+  .stats{ gap:16px; }
+  .stat{ font-size:10px; }
+  .stat b{ font-size:16px; }
+  .section-title{ font-size:22px; }
+  .head-office{ padding:16px; gap:12px; }
+  .head-office-icon{ width:38px; height:38px; }
+  .head-office-icon svg{ width:18px; height:18px; }
+  .head-office-title{ font-size:14px; }
+  .ho-pill-action{ padding:8px 14px; font-size:12px; }
+  .text-input, #branchSelect{ padding:14px 16px 14px 48px; font-size:14px; }
+  .input-icon{ left:14px; width:18px; height:18px; }
+  .card{ padding:18px; }
+  .card h3{ font-size:17px; }
+  .row{ flex-direction:column; gap:6px; padding:10px 0; }
+  .tag{ min-width:auto; }
+}
+
+@media (max-width:380px){
+  .stats{ width:100%; justify-content:flex-end; }
+}
+</style>
+</head>
+<body>
+
+<div class="aurora">
+  <div class="aurora-blob b1"></div>
+  <div class="aurora-blob b2"></div>
+  <div class="aurora-blob b3"></div>
+  <div class="aurora-blob b4"></div>
+</div>
+<div class="grid-overlay"></div>
+<div class="noise"></div>
+
+<header>
+  <div class="container">
+    <div class="brand">
+      <div class="brand-left">
+        <div class="logo-badge">
+          <img src="__LOGO__" alt="Global EIS">
+        </div>
+        <div class="brand-text">
+          <h1>Branch Directory</h1>
+          <p>Global EIS · Visa Application Centers</p>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="countryCount">0</b><span>countries</span></div>
+        <div class="stat"><b id="branchCount">0</b><span>branches</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Head Office pill -->
+  <div class="head-office" id="headOffice">
+    <div class="head-office-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/>
+        <path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/>
+      </svg>
+    </div>
+    <div class="head-office-text">
+      <div class="head-office-label">Headquarters</div>
+      <div class="head-office-title">Global EIS – Nasr City, Cairo</div>
+    </div>
+    <button type="button" id="headOfficeCopyBtn" class="ho-pill-action">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+      <span class="ho-pill-action-text">Copy</span>
+    </button>
+  </div>
+
+  <!-- Search Section -->
+  <section class="search-section">
+    <h2 class="section-title">Find a Branch</h2>
+    <p class="section-subtitle">Start typing a country name or code (e.g. FR, IT, JP)</p>
+    <div class="autocomplete-wrap">
+      <input type="text" id="countryInput" class="text-input" placeholder="Type country name or code (e.g. FR)" autocomplete="off" aria-label="Country search">
+      <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <div id="countrySuggestions" class="suggestions" role="listbox"></div>
+    </div>
+
+    <div id="branchStep">
+      <div class="select-wrap" style="margin-top:16px;">
+        <select id="branchSelect" aria-label="Select a branch">
+          <option value="">— Select a branch —</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="resultWrap">
+      <div class="placeholder-hint">Branch details will appear here once selected.</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Global EIS · Branch Directory · Live on <a href="https://vercel.com" target="_blank" rel="noopener">Vercel</a>
+</footer>
+
+<script>
+/* ============================================================
+   DATA: List of countries and their visa application branches.
+   To add a new country: add an object to the array with the same shape.
+   ============================================================ */
+const DATA = __DATA__;
+
+/* ============================================================
+   Country flags (emoji) + ISO codes
+   ============================================================ */
+const FLAGS = {
+  France:'🇫🇷', Germany:'🇩🇪', Belgium:'🇧🇪', Luxembourg:'🇱🇺',
+  Spain:'🇪🇸', Italy:'🇮🇹', Slovakia:'🇸🇰', Austria:'🇦🇹',
+  Greece:'🇬🇷', Norway:'🇳🇴', Sweden:'🇸🇪', Switzerland:'🇨🇭',
+  Netherlands:'🇳🇱', Malta:'🇲🇹', Denmark:'🇩🇰', Finland:'🇫🇮',
+  Hungary:'🇭🇺', Portugal:'🇵🇹', Latvia:'🇱🇻', Lithuania:'🇱🇹',
+  Croatia:'🇭🇷', Estonia:'🇪🇪', Iceland:'🇮🇸', Liechtenstein:'🇱🇮',
+  Bulgaria:'🇧🇬', Romania:'🇷🇴', Poland:'🇵🇱', Slovenia:'🇸🇮',
+  Czech:'🇨🇿', USA:'🇺🇸', 'United Kingdom':'🇬🇧', China:'🇨🇳',
+  Turkey:'🇹🇷', Morocco:'🇲🇦', India:'🇮🇳', Japan:'🇯🇵', Mexico:'🇲🇽',
+  Russia:'🇷🇺', Canada:'🇨🇦', Australia:'🇦🇺', 'Saudi Arabia':'🇸🇦',
+  UAE:'🇦🇪', Qatar:'🇶🇦', Brazil:'🇧🇷', 'South Korea':'🇰🇷'
+};
+const COUNTRY_CODES = {
+  France:'FR', Germany:'DE', Belgium:'BE', Luxembourg:'LU',
+  Spain:'ES', Italy:'IT', Slovakia:'SK', Austria:'AT',
+  Greece:'GR', Norway:'NO', Sweden:'SE', Switzerland:'CH',
+  Netherlands:'NL', Malta:'MT', Denmark:'DK', Finland:'FI',
+  Hungary:'HU', Portugal:'PT', Latvia:'LV', Lithuania:'LT',
+  Croatia:'HR', Estonia:'EE', Iceland:'IS', Liechtenstein:'LI',
+  Bulgaria:'BG', Romania:'RO', Poland:'PL', Slovenia:'SI',
+  Czech:'CZ', USA:'US', 'United Kingdom':'UK', China:'CN',
+  Turkey:'TR', Morocco:'MA', India:'IN', Japan:'JP', Mexico:'MX',
+  Russia:'RU', Canada:'CA', Australia:'AU', 'Saudi Arabia':'SA',
+  UAE:'AE', Qatar:'QA', Brazil:'BR', 'South Korea':'KR'
+};
+
+/* ============================================================
+   DOM refs
+   ============================================================ */
+const countryInput = document.getElementById('countryInput');
+const countrySuggestions = document.getElementById('countrySuggestions');
+const branchStep = document.getElementById('branchStep');
+const branchSelect = document.getElementById('branchSelect');
+const resultWrap = document.getElementById('resultWrap');
+const countryCountEl = document.getElementById('countryCount');
+const branchCountEl = document.getElementById('branchCount');
+let selectedCountry = null;
+
+/* ============================================================
+   Utilities
+   ============================================================ */
+function escAttr(s){ return String(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function escHtml(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function isUrl(s){ return /^https?:\/\//.test(s||''); }
+
+function animateCount(el, target){
+  const start = parseInt(el.textContent) || 0;
+  const dur = 900;
+  const t0 = performance.now();
+  function step(t){
+    const k = Math.min(1, (t - t0) / dur);
+    const eased = 1 - Math.pow(1 - k, 3);
+    el.textContent = Math.round(start + (target - start) * eased);
+    if (k < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+/* ============================================================
+   Init
+   ============================================================ */
+function init(){
+  animateCount(countryCountEl, DATA.length);
+  const total = DATA.reduce((s, c) => s + c.branches.length, 0);
+  animateCount(branchCountEl, total);
+}
+
+/* ============================================================
+   Country autocomplete
+   ============================================================ */
+function buildSuggestions(q){
+  q = q.toLowerCase().trim();
+  if (!q) return [];
+  return DATA.filter(c => {
+    const name = c.country.toLowerCase();
+    const code = (COUNTRY_CODES[c.country] || '').toLowerCase();
+    return name.includes(q) || code.startsWith(q) || code === q;
+  }).slice(0, 10);
+}
+
+function showSuggestions(items){
+  if (!items.length){ countrySuggestions.classList.remove('show'); return; }
+  countrySuggestions.innerHTML = items.map(c => {
+    const flag = FLAGS[c.country] || '🌍';
+    const code = COUNTRY_CODES[c.country] || '';
+    return `<div class="suggestion-item" data-country="${escAttr(c.country)}" role="option">
+      <span class="suggestion-flag">${flag}</span>
+      <span class="suggestion-name">${escHtml(c.country)}</span>
+      <span class="suggestion-meta">${code} · ${c.branches.length} branch${c.branches.length > 1 ? 'es' : ''}</span>
+    </div>`;
+  }).join('');
+  countrySuggestions.classList.add('show');
+}
+
+function hideSuggestions(){ countrySuggestions.classList.remove('show'); }
+
+function selectCountry(name){
+  selectedCountry = name;
+  countryInput.value = `${FLAGS[name] || ''} ${name}`.trim();
+  hideSuggestions();
+  branchStep.classList.add('show');
+  const country = DATA.find(c => c.country === name);
+  branchSelect.innerHTML = '<option value="">— Select a branch —</option>' +
+    country.branches.map((b, i) => `<option value="${i}">${escHtml(b.name)}</option>`).join('');
+  resultWrap.innerHTML = `<div class="placeholder-hint">Select a branch above to see details.</div>`;
+}
+
+countryInput.addEventListener('input', e => {
+  const items = buildSuggestions(e.target.value);
+  showSuggestions(items);
+});
+
+countrySuggestions.addEventListener('click', e => {
+  const item = e.target.closest('.suggestion-item');
+  if (!item) return;
+  e.preventDefault();
+  selectCountry(item.getAttribute('data-country'));
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.autocomplete-wrap')) hideSuggestions();
+});
+
+/* ============================================================
+   WhatsApp message builder
+   ============================================================ */
+function buildWhatsAppMessage(country, b){
+  const flag = FLAGS[country] || '';
+  const lines = [
+    `${flag} Global EIS — Visa Application Center`,
+    ``,
+    `🌍 Country: ${country}`,
+    `🏢 Branch: ${b.name}`,
+    `🏙️ City: ${b.city}`,
+    `🛂 Provider: ${b.visaCenter}`,
+    ``,
+    `📍 Address: ${b.address}`,
+    `🕙 Working Hours: ${b.workingHours || '—'}`,
+  ];
+  if (b.submissionHours) lines.push(`⏰ Submission Hours: ${b.submissionHours}`);
+  lines.push(`📞 Phone: ${b.phone || '—'}`);
+  lines.push(``);
+  lines.push(`🗺️ Google Maps: ${b.mapLink || '—'}`);
+  lines.push(`🔗 Reference: ${b.reference || '—'}`);
+  lines.push(``);
+  lines.push(`— Sent via Global EIS Branch Directory`);
+  return lines.join('\n');
+}
+
+function waLink(text){
+  return `https://wa.me/?text=${encodeURIComponent(text)}`;
+}
+
+/* ============================================================
+   Branch change handler — render branch details
+   ============================================================ */
+function onBranchChange(){
+  const countryName = selectedCountry;
+  const idx = branchSelect.value;
+  if (!countryName || idx === ''){
+    resultWrap.innerHTML = `<div class="placeholder-hint">Branch details will appear here once selected.</div>`;
+    return;
+  }
+  const country = DATA.find(c => c.country === countryName);
+  const b = country.branches[idx];
+  const waText = buildWhatsAppMessage(countryName, b);
+  const waUrl = waLink(waText);
+
+  const phoneButtons = (b.phone && b.phone.toLowerCase() !== 'not available')
+    ? `<div class="action-row">
+         <button class="copy-btn" data-copy="${escAttr(b.phone)}">📋 Copy</button>
+         <a class="wa-btn" href="${escAttr(waLink('Phone: ' + b.phone))}" target="_blank" rel="noopener">
+           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.8 7.8 0 0 0 12 4a7.9 7.9 0 0 0-6.8 11.9L4 20l4.2-1.1A7.9 7.9 0 0 0 12 20a7.9 7.9 0 0 0 5.6-13.7zM12 18.3a6.5 6.5 0 0 1-3.3-.9l-.2-.1-2.5.7.7-2.4-.2-.2a6.5 6.5 0 1 1 5.5 3z"/></svg>
+           WhatsApp
+         </a>
+       </div>`
+    : '';
+
+  const refButtons = isUrl(b.reference)
+    ? `<div class="action-row"><button class="copy-btn" data-copy="${escAttr(b.reference)}">📋 Copy</button></div>`
+    : '';
+
+  const copyAllData = 'Address: ' + b.address + '\n\nGoogle Maps: ' + b.mapLink + '\n\nWorking Hours:\n' + (b.workingHours || '') + (b.submissionHours ? ('\n' + b.submissionHours) : '');
+
+  resultWrap.innerHTML = `
+    <div class="card">
+      <h3>${escHtml(b.name)}</h3>
+      <div class="row"><span class="tag">Country</span><span>${escHtml(countryName)}</span></div>
+      <div class="row"><span class="tag">City</span><span>${escHtml(b.city)}</span></div>
+      <div class="row"><span class="tag">Visa Center</span><span>${escHtml(b.visaCenter)}</span></div>
+      <div class="row"><span class="tag">Address</span><span>${escHtml(b.address)}</span></div>
+      <div class="row"><span class="tag">Map</span><span>${isUrl(b.mapLink) ? `<a href="${escAttr(b.mapLink)}" target="_blank" rel="noopener">${escHtml(b.mapLink)}</a>` : (escHtml(b.mapLink) || 'Not available')}</span></div>
+      <div class="row"><span class="tag">Hours</span><span>${escHtml(b.workingHours) || '—'}${b.submissionHours ? `<br><small style="color:var(--text-muted)">${escHtml(b.submissionHours)}</small>` : ''}</span></div>
+      <div class="row"><span class="tag">Phone</span><span class="phone">${escHtml(b.phone)}</span>${phoneButtons}</div>
+      <div class="row"><span class="tag">Reference</span><span>${isUrl(b.reference) ? `<a href="${escAttr(b.reference)}" target="_blank" rel="noopener">${escHtml(b.reference)}</a>` : (escHtml(b.reference) || 'Not available')}</span>${refButtons}</div>
+    </div>
+
+    <div class="card client-card">
+      <h3>Send to Client</h3>
+      <div class="row"><span class="tag">Address</span><span>${escHtml(b.address)}</span></div>
+      <div class="row"><span class="tag">Map</span><span>${isUrl(b.mapLink) ? `<a href="${escAttr(b.mapLink)}" target="_blank" rel="noopener">${escHtml(b.mapLink)}</a>` : (escHtml(b.mapLink) || 'Not available')}</span></div>
+      <div class="row"><span class="tag">Hours</span><span>${escHtml(b.workingHours) || '—'}</span></div>
+      ${b.submissionHours ? `<div class="row"><span class="tag">Submission</span><span>${escHtml(b.submissionHours)}</span></div>` : ''}
+      <button class="copy-btn copy-all-btn" data-copy="${escAttr(copyAllData)}">📋 Copy Address + Location</button>
+      <a class="wa-all-btn" href="${escAttr(waUrl)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.8 7.8 0 0 0 12 4a7.9 7.9 0 0 0-6.8 11.9L4 20l4.2-1.1A7.9 7.9 0 0 0 12 20a7.9 7.9 0 0 0 5.6-13.7zM12 18.3a6.5 6.5 0 0 1-3.3-.9l-.2-.1-2.5.7.7-2.4-.2-.2a6.5 6.5 0 1 1 5.5 3z"/></svg>
+        Send via WhatsApp
+      </a>
+    </div>
+  `;
+}
+
+branchSelect.addEventListener('change', onBranchChange);
+
+/* ============================================================
+   Copy buttons (delegated)
+   ============================================================ */
+document.addEventListener('click', function(e){
+  const btn = e.target.closest('.copy-btn');
+  if (!btn || !btn.dataset.copy) return;
+  e.preventDefault();
+  const text = btn.dataset.copy;
+  function showCopied(){
+    const orig = btn.innerHTML;
+    btn.classList.add('copied');
+    btn.innerHTML = '✓ Copied';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = orig;
+    }, 1400);
+  }
+  function fallback(){
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try { document.execCommand('copy'); showCopied(); }
+    catch (err) { alert('Copy failed. Copy manually:\n' + text); }
+    document.body.removeChild(ta);
+  }
+  if (navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(showCopied).catch(fallback);
+  } else {
+    fallback();
+  }
+});
+
+/* ============================================================
+   Head Office copy
+   ============================================================ */
+const headOfficeCopyBtn = document.getElementById('headOfficeCopyBtn');
+const headOfficeEl = document.getElementById('headOffice');
+headOfficeCopyBtn.addEventListener('click', function(){
+  const text =
+    'المقر الرئيسي – Global EIS\n\n' +
+    '📍 العنوان: B Square، مدخل C، الدور الخامس، طريق النصر، مدينة نصر (بجوار طيبة مول، بالقرب من أول كوبري عباس العقاد)\n\n' +
+    '🕙 مواعيد العمل: السبت إلى الخميس | 10:00 ص – 7:00 م (ما عدا الإجازات الرسمية)\n\n' +
+    '📍 الموقع: https://maps.app.goo.gl/daqfBDTyvVoHNnQf7\n\n' +
+    'ــــــــــــــــــــــ\n\n' +
+    'Global EIS – Head Office\n\n' +
+    '📍 Address: B Square, Entrance C, 5th Floor, El-Nasr Rd., Nasr City (Next to Taiba Mall, near the First Abbas El Akkad Bridge)\n\n' +
+    '🕙 Working Hours: Saturday–Thursday | 10:00 AM – 7:00 PM (Except official holidays)\n\n' +
+    '📍 Location: https://maps.app.goo.gl/daqfBDTyvVoHNnQf7';
+
+  const actionText = headOfficeCopyBtn.querySelector('.ho-pill-action-text');
+  function showCopied(){
+    headOfficeEl.classList.add('copied');
+    actionText.textContent = 'Copied ✓';
+    setTimeout(() => {
+      headOfficeEl.classList.remove('copied');
+      actionText.textContent = 'Copy';
+    }, 1400);
+  }
+  function fallbackCopy(){
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try { document.execCommand('copy'); showCopied(); }
+    catch (err) { alert('تعذر النسخ تلقائيًا، برجاء النسخ يدويًا:\n' + text); }
+    document.body.removeChild(ta);
+  }
+  if (navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(showCopied).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+});
+
+init();
+</script>
+
+</body>
+</html>
