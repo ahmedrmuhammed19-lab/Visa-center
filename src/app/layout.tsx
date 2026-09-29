@@ -32,8 +32,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground bg-pattern bg-aurora`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
+        {/* Live aurora background */}
+        <div className="aurora-bg">
+          <div className="aurora-blob b1"></div>
+          <div className="aurora-blob b2"></div>
+          <div className="aurora-blob b3"></div>
+          <div className="aurora-blob b4"></div>
+        </div>
+        <div className="grid-overlay"></div>
+        <div className="noise-overlay"></div>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

@@ -62,21 +62,21 @@ export function AdminLogin({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md glass-card rgb-border-card">
         <DialogHeader>
           <div className="flex items-center gap-3 mb-2">
-            <div className="h-10 w-10 rounded-lg bg-[var(--brand-navy)]/10 flex items-center justify-center">
-              <ShieldCheck className="h-5 w-5 text-[var(--brand-navy)]" />
+            <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-[var(--brand-navy)] to-[var(--rgb-violet)] flex items-center justify-center shadow-lg glow-violet">
+              <ShieldCheck className="h-5 w-5 text-white" />
             </div>
             <div>
-              <DialogTitle>Admin Login</DialogTitle>
-              <DialogDescription>Restricted access — Global EIS staff only.</DialogDescription>
+              <DialogTitle className="text-gradient">Admin Login</DialogTitle>
+              <DialogDescription className="font-mono text-xs">◆ Restricted access — Global EIS staff only.</DialogDescription>
             </div>
           </div>
         </DialogHeader>
         <form onSubmit={onSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="admin-username">Username</Label>
+            <Label className="font-mono text-xs uppercase tracking-wider">Username</Label>
             <Input
               id="admin-username"
               type="text"
@@ -86,10 +86,11 @@ export function AdminLogin({
               autoComplete="username"
               disabled={loading}
               required
+              className="input-glow h-11"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="admin-password">Password</Label>
+            <Label className="font-mono text-xs uppercase tracking-wider">Password</Label>
             <Input
               id="admin-password"
               type="password"
@@ -99,6 +100,7 @@ export function AdminLogin({
               autoComplete="current-password"
               disabled={loading}
               required
+              className="input-glow h-11"
             />
           </div>
           <DialogFooter>
@@ -110,14 +112,14 @@ export function AdminLogin({
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={loading} className="btn-brand">
+            <Button type="submit" disabled={loading} className="btn-rgb">
               {loading ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
                   Logging in...
                 </>
               ) : (
-                'Login'
+                'Login →'
               )}
             </Button>
           </DialogFooter>

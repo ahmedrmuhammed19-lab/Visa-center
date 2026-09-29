@@ -73,17 +73,17 @@ export function AdminPanel({ onDataChanged }: { onDataChanged: () => Promise<voi
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gradient">Admin Dashboard</h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Manage countries, branches, and head office info.
+        <h1 className="text-2xl sm:text-4xl font-bold text-gradient">Admin Dashboard</h1>
+        <p className="text-sm text-muted-foreground mt-2 font-mono">
+          ◍ Manage countries, branches, and head office info.
         </p>
       </div>
 
       <Tabs defaultValue="branches" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3 max-w-md">
-          <TabsTrigger value="branches">Branches</TabsTrigger>
-          <TabsTrigger value="countries">Countries</TabsTrigger>
-          <TabsTrigger value="head-office">Head Office</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3 max-w-md glass-card">
+          <TabsTrigger value="branches" className="tab-rgb-active data-[state=active]:text-white">Branches</TabsTrigger>
+          <TabsTrigger value="countries" className="tab-rgb-active data-[state=active]:text-white">Countries</TabsTrigger>
+          <TabsTrigger value="head-office" className="tab-rgb-active data-[state=active]:text-white">Head Office</TabsTrigger>
         </TabsList>
 
         <TabsContent value="branches">
@@ -183,7 +183,7 @@ function BranchesManager({ onDataChanged }: { onDataChanged: () => Promise<void>
         </div>
         <Button
           onClick={() => { setEditingBranch(null); setShowForm(true) }}
-          className="btn-brand"
+          className="btn-rgb"
           size="sm"
         >
           <Plus className="h-4 w-4" />
@@ -460,7 +460,7 @@ function BranchForm({
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={loading}>
               Cancel
             </Button>
-            <Button type="submit" disabled={loading} className="btn-brand">
+            <Button type="submit" disabled={loading} className="btn-rgb">
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
               {branch ? 'Save Changes' : 'Add Branch'}
             </Button>
@@ -527,7 +527,7 @@ function CountriesManager({ onDataChanged }: { onDataChanged: () => Promise<void
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm text-muted-foreground">{countries.length} countries</p>
-        <Button onClick={() => { setEditing(null); setShowForm(true) }} className="btn-brand" size="sm">
+        <Button onClick={() => { setEditing(null); setShowForm(true) }} className="btn-rgb" size="sm">
           <Plus className="h-4 w-4" />
           Add Country
         </Button>
@@ -686,7 +686,7 @@ function CountryForm({
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={loading}>
               Cancel
             </Button>
-            <Button type="submit" disabled={loading} className="btn-brand">
+            <Button type="submit" disabled={loading} className="btn-rgb">
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
               {country ? 'Save Changes' : 'Add Country'}
             </Button>
@@ -766,7 +766,7 @@ function HeadOfficeManager({ onDataChanged }: { onDataChanged: () => Promise<voi
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm text-muted-foreground">{offices.length} office(s)</p>
-        <Button onClick={() => { setEditing(null); setShowForm(true) }} className="btn-brand" size="sm">
+        <Button onClick={() => { setEditing(null); setShowForm(true) }} className="btn-rgb" size="sm">
           <Plus className="h-4 w-4" />
           Add Head Office
         </Button>
@@ -960,7 +960,7 @@ function HeadOfficeForm({
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={loading}>
               Cancel
             </Button>
-            <Button type="submit" disabled={loading} className="btn-brand">
+            <Button type="submit" disabled={loading} className="btn-rgb">
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
               {office ? 'Save Changes' : 'Add Head Office'}
             </Button>

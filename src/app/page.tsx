@@ -227,29 +227,29 @@ function HeadOfficePill({ office }: { office: HeadOffice }) {
   }
 
   return (
-    <Card className="overflow-hidden border-l-4 border-l-[var(--brand-gold)] p-0">
-      <div className="flex items-center gap-4 p-4 sm:p-5">
-        <div className="hidden sm:flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-navy)]/10">
-          <Building2 className="h-6 w-6 text-[var(--brand-navy)]" />
+    <Card className="glass-card rgb-border-card p-0 overflow-hidden">
+      <div className="flex items-center gap-4 p-5 sm:p-6 relative z-10">
+        <div className="hidden sm:flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--brand-navy)] to-[var(--brand-navy-light)] shadow-lg glow-cyan">
+          <Building2 className="h-7 w-7 text-white" />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
-            Headquarters
+          <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-gradient-cyan font-semibold">
+            ◆ Headquarters
           </div>
-          <div className="font-semibold text-foreground truncate">
-            Global EIS – Nasr City, Cairo
+          <div className="font-bold text-base sm:text-lg text-foreground truncate mt-1">
+            Global EIS — Nasr City, Cairo
           </div>
-          <div className="text-xs text-muted-foreground mt-0.5 truncate">
+          <div className="text-xs text-muted-foreground mt-1 truncate font-mono">
             {office.hoursEn}
           </div>
         </div>
         <Button
           onClick={onCopy}
-          className={`shrink-0 ${copied ? 'btn-gold' : 'btn-brand'}`}
+          className={`shrink-0 ${copied ? 'btn-gold' : 'btn-rgb'} h-10 px-4`}
           size="sm"
         >
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          <span className="hidden sm:inline">{copied ? 'Copied' : 'Copy'}</span>
+          <span className="hidden sm:inline font-semibold">{copied ? 'Copied ✓' : 'Copy'}</span>
         </Button>
       </div>
     </Card>
@@ -277,14 +277,13 @@ function BranchDetails({ branch, country, headOffice }: {
   return (
     <div className="space-y-4 animate-fade-in-up">
       {/* Main branch card */}
-      <Card className="overflow-hidden">
-        <div className="h-1 bg-gradient-to-r from-[var(--brand-navy)] via-[var(--brand-gold)] to-[var(--brand-navy)]" />
-        <div className="p-5 sm:p-6">
-          <div className="flex items-start gap-3 mb-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--brand-navy)]/10 shrink-0">
-              <Globe className="h-5 w-5 text-[var(--brand-navy)]" />
+      <Card className="glass-card rgb-border-card overflow-hidden">
+        <div className="p-5 sm:p-6 relative z-10">
+          <div className="flex items-start gap-3 mb-5">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--rgb-cyan)]/20 to-[var(--rgb-violet)]/20 border border-[var(--rgb-cyan)]/30 shrink-0">
+              <Globe className="h-5 w-5 text-[var(--rgb-cyan)]" />
             </div>
-            <h3 className="text-lg sm:text-xl font-semibold text-foreground leading-tight">
+            <h3 className="text-lg sm:text-xl font-bold text-gradient leading-tight">
               {branch.name}
             </h3>
           </div>
@@ -404,11 +403,13 @@ function BranchDetails({ branch, country, headOffice }: {
       </Card>
 
       {/* Send to client card */}
-      <Card className="overflow-hidden border-[var(--brand-gold)]/30 bg-gradient-to-br from-[var(--brand-gold)]/5 to-[var(--brand-navy)]/5">
-        <div className="p-5 sm:p-6">
-          <div className="flex items-center gap-2 mb-3">
-            <Send className="h-4 w-4 text-[var(--brand-gold)]" />
-            <h4 className="font-semibold text-foreground">Send to Client</h4>
+      <Card className="glass-card overflow-hidden border-[var(--brand-gold)]/40 bg-gradient-to-br from-[var(--brand-gold)]/8 to-[var(--rgb-violet)]/8">
+        <div className="p-5 sm:p-6 relative z-10">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--brand-gold)] to-[var(--brand-gold-light)] shadow-md glow-gold">
+              <Send className="h-4 w-4 text-white" />
+            </div>
+            <h4 className="font-bold text-base text-gradient-gold">Send to Client</h4>
           </div>
 
           <div className="space-y-2 text-sm mb-4">
@@ -607,18 +608,18 @@ export default function Home() {
 
         {/* Section title */}
         <div className="mb-6">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">
+          <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-gradient">
             Find a Branch
           </h2>
-          <p className="text-sm text-muted-foreground mt-1">
-            Type a country name or code (e.g. FR, IT, JP)
+          <p className="text-sm text-muted-foreground mt-2 font-mono">
+            ◍ Type a country name or code (e.g. FR, IT, JP)
           </p>
         </div>
 
         {/* Search */}
         <div className="relative mb-4">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--rgb-cyan)] pointer-events-none" />
             <Input
               type="text"
               value={searchQuery}
@@ -629,7 +630,7 @@ export default function Home() {
               onFocus={() => setShowSuggestions(true)}
               onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
               placeholder="Type country name or code (e.g. FR)"
-              className="pl-10 h-12 text-base"
+              className="pl-11 h-14 text-base glass-card input-glow rounded-xl"
               autoComplete="off"
             />
             {searchQuery && (
@@ -648,7 +649,7 @@ export default function Home() {
 
           {/* Suggestions */}
           {showSuggestions && suggestions.length > 0 && (
-            <Card className="absolute z-50 top-full mt-2 left-0 right-0 p-0 overflow-hidden animate-fade-in">
+            <Card className="glass-card absolute z-50 top-full mt-2 left-0 right-0 p-0 overflow-hidden animate-fade-in">
               <div className="max-h-72 overflow-y-auto">
                 {suggestions.map((c) => (
                   <button
@@ -657,7 +658,7 @@ export default function Home() {
                       e.preventDefault()
                       handleSelectCountry(c)
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-3 hover:bg-accent/50 text-left border-b last:border-b-0"
+                    className="suggestion-item-rgb w-full flex items-center gap-3 px-4 py-3 hover:bg-accent/50 text-left border-b last:border-b-0"
                   >
                     <span className="text-2xl">{c.flag || '🌍'}</span>
                     <div className="flex-1 min-w-0">
@@ -666,7 +667,7 @@ export default function Home() {
                         {c.code} · {c.branches.length} branch{c.branches.length !== 1 ? 'es' : ''}
                       </div>
                     </div>
-                    <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
+                    <ArrowRight className="h-4 w-4 text-[var(--rgb-cyan)] shrink-0" />
                   </button>
                 ))}
               </div>
@@ -764,12 +765,14 @@ function Header({
   authChecked: boolean
 }) {
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-lg">
+    <header className="sticky top-0 z-40 border-b border-[var(--rgb-violet)]/15 bg-background/60 backdrop-blur-2xl">
+      {/* Top gradient line */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--rgb-cyan)] to-transparent opacity-70"></div>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 gap-3">
           {/* Brand */}
           <div className="flex items-center gap-3 min-w-0">
-            <div className="h-9 w-9 shrink-0 rounded-lg bg-white p-1 shadow-sm">
+            <div className="h-10 w-10 shrink-0 rounded-xl bg-white p-1 shadow-lg shadow-[var(--rgb-cyan)]/30 ring-1 ring-[var(--rgb-cyan)]/40">
               <Image
                 src="/logo.png"
                 alt="Global EIS"
@@ -779,8 +782,8 @@ function Header({
                 priority
               />
             </div>
-            <div className="hidden sm:block border-l pl-3">
-              <h1 className="text-sm font-semibold leading-tight">Branch Directory</h1>
+            <div className="hidden sm:block border-l border-[var(--rgb-violet)]/20 pl-3">
+              <h1 className="text-sm font-bold leading-tight text-gradient">Branch Directory</h1>
               <p className="text-[10px] text-muted-foreground font-mono leading-tight">
                 Global EIS · Visa Application Centers
               </p>
@@ -790,34 +793,35 @@ function Header({
           {/* Stats */}
           <div className="hidden md:flex items-center gap-6">
             <div className="text-center">
-              <div className="text-lg font-bold text-[var(--brand-navy)] dark:text-[var(--brand-gold-light)] font-mono">
+              <div className="text-xl font-bold font-mono stat-number">
                 {loading ? <Skeleton className="h-5 w-8" /> : <AnimatedCounter value={countryCount} />}
               </div>
-              <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
+              <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-[0.15em]">
                 countries
               </div>
             </div>
+            <div className="w-px h-8 bg-gradient-to-b from-transparent via-[var(--rgb-violet)]/30 to-transparent"></div>
             <div className="text-center">
-              <div className="text-lg font-bold text-[var(--brand-navy)] dark:text-[var(--brand-gold-light)] font-mono">
+              <div className="text-xl font-bold font-mono stat-number">
                 {loading ? <Skeleton className="h-5 w-8" /> : <AnimatedCounter value={branchCount} />}
               </div>
-              <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
+              <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-[0.15em]">
                 branches
               </div>
             </div>
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
             <ThemeToggle />
             {authChecked && (
               adminMode ? (
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5">
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={onAdminClick}
-                    className="hidden sm:flex gap-2"
+                    className="hidden sm:flex gap-2 hover:bg-[var(--rgb-cyan)]/10"
                   >
                     <Globe className="h-4 w-4" />
                     View Site
@@ -827,7 +831,7 @@ function Header({
                     size="icon"
                     onClick={onLogout}
                     title="Logout"
-                    className="h-9 w-9"
+                    className="h-9 w-9 hover:bg-destructive/10 hover:text-destructive"
                   >
                     <LogOut className="h-4 w-4" />
                   </Button>
@@ -838,7 +842,7 @@ function Header({
                   size="icon"
                   onClick={onAdminClick}
                   title="Admin"
-                  className="h-9 w-9"
+                  className="h-9 w-9 hover:bg-[var(--rgb-violet)]/10 hover:text-[var(--rgb-violet)]"
                 >
                   <ShieldCheck className="h-4 w-4" />
                 </Button>
