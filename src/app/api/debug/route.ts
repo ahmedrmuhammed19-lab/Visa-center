@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
-import { PrismaLibSql } from '@prisma/adapter-libsql'
+import { PrismaLibSQL } from '@prisma/adapter-libsql'
 import { createClient } from '@libsql/client'
 
 export const dynamic = 'force-dynamic'
@@ -23,7 +23,7 @@ export async function GET() {
       dbTest = { ok: false, reason: 'env vars missing', env }
     } else {
       const libsql = createClient({ url: tursoUrl, authToken: tursoToken })
-      const adapter = new PrismaLibSql(libsql)
+      const adapter = new PrismaLibSQL(libsql)
       const prisma = new PrismaClient({ adapter })
       const count = await prisma.country.count()
       dbTest = { ok: true, count, usedAdapter: true }
