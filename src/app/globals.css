@@ -398,15 +398,16 @@ body {
 }
 
 .btn-whatsapp {
-  background: linear-gradient(135deg, #25D366, #128C7E);
+  background: linear-gradient(135deg, var(--brand-navy), var(--brand-navy-light));
   color: white;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(37, 211, 102, 0.4);
+  border: 1px solid color-mix(in oklch, var(--brand-navy-light) 40%, transparent);
 }
 
 .btn-whatsapp:hover {
   transform: translateY(-1px);
-  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4), 0 0 20px rgba(0, 230, 118, 0.3);
+  box-shadow: 0 10px 30px var(--brand-navy-glow), 0 0 20px color-mix(in oklch, var(--rgb-cyan) 25%, transparent);
+  border-color: var(--brand-navy-light);
 }
 
 .btn-rgb {
