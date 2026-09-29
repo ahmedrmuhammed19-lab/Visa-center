@@ -1,0 +1,72 @@
+// Prisma schema for Global EIS Branch Directory
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String // bcrypt hash
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Country {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  code      String?   // ISO 2-letter code (FR, DE, etc.)
+  flag      String?   // emoji
+  sortOrder Int       @default(0)
+  branches  Branch[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([sortOrder])
+}
+
+model Branch {
+  id              String   @id @default(cuid())
+  countryId       String
+  country         Country  @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  name            String
+  city            String
+  address         String
+  phone           String
+  visaCenter      String
+  reference       String?
+  mapLink         String?
+  workingHours    String?
+  submissionHours String?
+  sortOrder       Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([countryId])
+  @@index([sortOrder])
+}
+
+model HeadOffice {
+  id        String   @id @default(cuid())
+  labelAr   String
+  labelEn   String
+  addressAr String
+  addressEn String
+  hoursAr   String
+  hoursEn   String
+  mapLink   String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteSettings {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
