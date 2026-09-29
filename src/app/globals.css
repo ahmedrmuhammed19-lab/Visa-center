@@ -87,10 +87,10 @@
   --brand-navy: #143D6B;
   --brand-navy-light: #1E5490;
   --brand-navy-glow: rgba(20, 61, 107, 0.35);
-  /* Professional teal accent (replaces gold) */
-  --brand-gold: #0F766E;
-  --brand-gold-light: #14B8A6;
-  --brand-gold-glow: rgba(15, 118, 110, 0.4);
+  /* Professional silver/platinum accent (replaces gold) */
+  --brand-gold: #64748B;
+  --brand-gold-light: #94A3B8;
+  --brand-gold-glow: rgba(100, 116, 139, 0.4);
   
   /* Live RGB accents (for aurora + glows) */
   --rgb-cyan: #00E5FF;
@@ -149,9 +149,9 @@
   --brand-navy: #1E5490;
   --brand-navy-light: #2E6BAB;
   --brand-navy-glow: rgba(30, 84, 144, 0.45);
-  --brand-gold: #2DD4BF;
-  --brand-gold-light: #5EEAD4;
-  --brand-gold-glow: rgba(45, 212, 191, 0.5);
+  --brand-gold: #CBD5E1;
+  --brand-gold-light: #E2E8F0;
+  --brand-gold-glow: rgba(203, 213, 225, 0.4);
   
   --rgb-cyan: #00E5FF;
   --rgb-violet: #9B7FFF;

@@ -25,6 +25,7 @@ import {
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { Switch } from '@/components/ui/switch'
+import { Flag } from '@/components/flag'
 
 // ============================================================
 // Types (must match the page.tsx types)
@@ -175,7 +176,7 @@ function BranchesManager({ onDataChanged }: { onDataChanged: () => Promise<void>
               <SelectItem value="all">All countries</SelectItem>
               {countries.map(c => (
                 <SelectItem key={c.id} value={c.id}>
-                  {c.flag} {c.name}
+                  <span className="flex items-center gap-2"><Flag country={c.name} code={c.code} flag={c.flag} size="sm" /> {c.name}</span>
                 </SelectItem>
               ))}
             </SelectContent>
@@ -206,7 +207,7 @@ function BranchesManager({ onDataChanged }: { onDataChanged: () => Promise<void>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <Badge variant="secondary" className="font-mono">
-                        {country?.flag} {country?.name || 'Unknown'}
+                        <Flag country={country?.name} code={country?.code} flag={country?.flag} size="sm" /> {country?.name || 'Unknown'}
                       </Badge>
                       <Badge variant="outline" className="font-mono">{b.visaCenter}</Badge>
                     </div>
@@ -358,7 +359,7 @@ function BranchForm({
                 <SelectTrigger><SelectValue placeholder="Select country" /></SelectTrigger>
                 <SelectContent>
                   {countries.map(c => (
-                    <SelectItem key={c.id} value={c.id}>{c.flag} {c.name}</SelectItem>
+                    <SelectItem key={c.id} value={c.id}><span className="flex items-center gap-2"><Flag country={c.name} code={c.code} flag={c.flag} size="sm" /> {c.name}</span></SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -538,7 +539,7 @@ function CountriesManager({ onDataChanged }: { onDataChanged: () => Promise<void
           <Card key={c.id} className="p-4 hover:bg-accent/30 transition-colors">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3 min-w-0">
-                <div className="text-2xl">{c.flag || '🌍'}</div>
+                <Flag country={c.name} code={c.code} flag={c.flag} size="lg" />
                 <div className="min-w-0">
                   <div className="font-medium truncate">{c.name}</div>
                   <div className="text-xs text-muted-foreground font-mono flex items-center gap-2">

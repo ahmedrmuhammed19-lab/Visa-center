@@ -35,6 +35,7 @@ import {
 import { Switch } from '@/components/ui/switch'
 import { AdminLogin } from '@/components/admin-login'
 import { AdminPanel } from '@/components/admin-panel'
+import { Flag } from '@/components/flag'
 
 // ============================================================
 // Types
@@ -89,11 +90,10 @@ function isUrl(s?: string | null) {
 }
 
 function buildWhatsAppMessage(country: Country, b: Branch, headOffice: HeadOffice | null) {
-  const flag = country.flag || ''
   const lines = [
-    `${flag} Global EIS — Visa Application Center`,
+    `🌐 Global EIS — Visa Application Center`,
     ``,
-    `🌍 Country: ${country.name}`,
+    `🌍 Country: ${country.name}${country.code ? ` (${country.code})` : ''}`,
     `🏢 Branch: ${b.name}`,
     `🏙️ City: ${b.city}`,
     `🛂 Provider: ${b.visaCenter}`,
@@ -293,7 +293,10 @@ function BranchDetails({ branch, country, headOffice }: {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
               <div>
                 <div className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Country</div>
-                <div className="font-medium">{country.flag} {country.name}</div>
+                <div className="font-medium flex items-center gap-2">
+                  <Flag country={country.name} code={country.code} flag={country.flag} size="md" />
+                  {country.name}
+                </div>
               </div>
               <div>
                 <div className="text-xs font-mono uppercase tracking-wider text-muted-foreground">City</div>
@@ -528,7 +531,7 @@ export default function Home() {
   const handleSelectCountry = (country: Country) => {
     setSelectedCountry(country)
     setSelectedBranchId('')
-    setSearchQuery(`${country.flag || ''} ${country.name}`.trim())
+    setSearchQuery(country.name)
     setShowSuggestions(false)
   }
 
@@ -660,7 +663,7 @@ export default function Home() {
                     }}
                     className="suggestion-item-rgb w-full flex items-center gap-3 px-4 py-3 hover:bg-accent/50 text-left border-b last:border-b-0"
                   >
-                    <span className="text-2xl">{c.flag || '🌍'}</span>
+                    <Flag country={c.name} code={c.code} flag={c.flag} size="lg" />
                     <div className="flex-1 min-w-0">
                       <div className="font-medium truncate">{c.name}</div>
                       <div className="text-xs text-muted-foreground font-mono">
@@ -679,7 +682,7 @@ export default function Home() {
         {selectedCountry && (
           <div className="mb-6 animate-fade-in-up">
             <Label className="text-xs font-mono uppercase tracking-wider text-muted-foreground mb-2 block">
-              Select a branch in {selectedCountry.flag} {selectedCountry.name}
+              Select a branch in <span className="inline-flex items-center gap-1.5 align-middle"><Flag country={selectedCountry.name} code={selectedCountry.code} flag={selectedCountry.flag} size="sm" /> {selectedCountry.name}</span>
             </Label>
             <Select value={selectedBranchId} onValueChange={setSelectedBranchId}>
               <SelectTrigger className="h-14 text-base glass-card input-glow rounded-xl">
@@ -689,7 +692,7 @@ export default function Home() {
                 {selectedCountry.branches.map((b) => (
                   <SelectItem key={b.id} value={b.id} className="py-3">
                     <span className="flex items-center gap-3">
-                      <span className="text-xl leading-none">{selectedCountry.flag}</span>
+                      <Flag country={selectedCountry.name} code={selectedCountry.code} flag={selectedCountry.flag} size="md" />
                       <span>{b.name}</span>
                     </span>
                   </SelectItem>
