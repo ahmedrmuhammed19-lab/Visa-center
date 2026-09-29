@@ -110,14 +110,28 @@ function table<T extends { id: string }>(name: string) {
       const result = await client.execute({ sql, args })
       let rows = result.rows as any[]
       
-      // Handle includes (only for country.branches pattern)
+      // Handle includes efficiently (avoid N+1)
+      // For country.branches: fetch ALL branches in ONE query, then group in JS
       if (opts.include?.branches && name === 'Country') {
-        for (const row of rows) {
+        if (rows.length > 0) {
+          const countryIds = rows.map(r => r.id)
+          const placeholders = countryIds.map(() => '?').join(',')
           const branchResult = await client.execute({
-            sql: `SELECT * FROM Branch WHERE countryId = ? ORDER BY sortOrder ASC`,
-            args: [row.id]
+            sql: `SELECT * FROM Branch WHERE countryId IN (${placeholders}) ORDER BY sortOrder ASC`,
+            args: countryIds
           })
-          row.branches = branchResult.rows
+          // Group branches by countryId
+          const branchesByCountry = new Map<string, any[]>()
+          for (const b of branchResult.rows) {
+            const cid = (b as any).countryId
+            if (!branchesByCountry.has(cid)) {
+              branchesByCountry.set(cid, [])
+            }
+            branchesByCountry.get(cid)!.push(b)
+          }
+          for (const row of rows) {
+            row.branches = branchesByCountry.get(row.id) || []
+          }
         }
       }
       
@@ -147,11 +161,9 @@ function table<T extends { id: string }>(name: string) {
     
     async create(opts: { data: Record<string, any> }): Promise<T & any> {
       const data = { ...opts.data }
-      // Auto-generate ID if not provided
       if (!data.id) {
         data.id = crypto.randomUUID()
       }
-      // Auto-set createdAt/updatedAt if not provided and table has them
       const now = new Date().toISOString()
       if (!data.createdAt) data.createdAt = now
       if (!data.updatedAt) data.updatedAt = now
@@ -164,7 +176,6 @@ function table<T extends { id: string }>(name: string) {
       if (result.rows.length > 0) {
         return result.rows[0] as any
       }
-      // Fallback: query back by id
       const fetched = await client.execute({ sql: `SELECT * FROM ${name} WHERE id = ?`, args: [data.id] })
       return fetched.rows[0] as any
     },
@@ -184,7 +195,7 @@ function table<T extends { id: string }>(name: string) {
       const { clause, args } = buildWhere(opts.where || {})
       const sql = `DELETE FROM ${name} ${clause}`.trim()
       await client.execute({ sql, args })
-      return { count: 0 } // libsql doesn't return affected rows count easily
+      return { count: 0 }
     },
     
     async delete(opts: { where: Record<string, any> }): Promise<void> {
@@ -195,19 +206,14 @@ function table<T extends { id: string }>(name: string) {
   }
 }
 
-// Prisma-like db object
 export const db = {
   country: table<Country>('Country'),
   branch: table<Branch>('Branch'),
   headOffice: table<HeadOffice>('HeadOffice'),
   adminUser: table<AdminUser>('AdminUser'),
   siteSettings: table('SiteSettings'),
-  
-  // For nested create (Prisma's `create: { branches: { create: [...] } }`)
-  // This is handled specially in the seed script and country create route.
 }
 
-// Helper for explicit queries if needed
 export async function rawQuery<T = any>(sql: string, args: any[] = []): Promise<T[]> {
   const result = await client.execute({ sql, args })
   return result.rows as T[]
@@ -221,18 +227,15 @@ export async function rawBatch(statements: { sql: string, args: any[] }[]) {
   return client.batch(statements)
 }
 
-// Helper for cascading deletes (since libsql doesn't have FK enforcement by default)
 export async function deleteCountryCascade(countryId: string) {
   await client.execute({ sql: 'DELETE FROM Branch WHERE countryId = ?', args: [countryId] })
   await client.execute({ sql: 'DELETE FROM Country WHERE id = ?', args: [countryId] })
 }
 
-// Helper for creating country + branches together
 export async function createCountryWithBranches(
   country: Omit<Country, 'id' | 'createdAt' | 'updatedAt'>,
   branches: Array<Omit<Branch, 'id' | 'countryId' | 'createdAt' | 'updatedAt'>>
 ): Promise<{ country: Country, branches: Branch[] }> {
-  const crypto = await import('crypto')
   const countryId = crypto.randomUUID()
   const now = new Date().toISOString()
   
