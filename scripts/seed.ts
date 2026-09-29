@@ -4,7 +4,7 @@
  *
  * Admin credentials:
  *   username: admin
- *   password: globaleis2026
+ *   password: admin
  *
  * Run with: bun run db:seed
  */
@@ -330,12 +330,12 @@ async function main() {
   await db.siteSettings.deleteMany()
   console.log('✓ Cleaned existing data')
 
-  // 2. Admin user — username: admin / password: globaleis2026
-  const hashedPassword = await bcrypt.hash('globaleis2026', 10)
+  // 2. Admin user — username: admin / password: admin
+  const hashedPassword = await bcrypt.hash('admin', 10)
   await db.adminUser.create({
     data: { username: 'admin', password: hashedPassword },
   })
-  console.log('✓ Created admin user (username: admin, password: globaleis2026)')
+  console.log('✓ Created admin user (username: admin, password: admin)')
 
   // 3. Head office
   await db.headOffice.create({
