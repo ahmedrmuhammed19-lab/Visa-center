@@ -10,9 +10,6 @@ async function requireAdmin(request: NextRequest) {
   return { admin }
 }
 
-/**
- * GET /api/admin/countries
- */
 export async function GET(request: NextRequest) {
   const auth = await requireAdmin(request)
   if ('error' in auth) return auth.error
@@ -21,7 +18,6 @@ export async function GET(request: NextRequest) {
     orderBy: [{ sortOrder: 'asc' }, { name: 'asc' }],
   })
   
-  // Get branch counts for each country
   const counts = await rawQuery<{ countryId: string, count: number }>(
     'SELECT countryId, COUNT(*) as count FROM Branch GROUP BY countryId'
   )
@@ -35,10 +31,6 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({ countries: countriesWithCounts })
 }
 
-/**
- * POST /api/admin/countries
- * Body: { name, code?, flag?, sortOrder? }
- */
 export async function POST(request: NextRequest) {
   const auth = await requireAdmin(request)
   if ('error' in auth) return auth.error
@@ -51,7 +43,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'name is required' }, { status: 400 })
     }
 
-    // Check for existing country with same name (since we don't have proper unique constraint enforcement)
     const existing = await db.country.findFirst({ where: { name: name.trim() } })
     if (existing) {
       return NextResponse.json({ error: 'Country name already exists' }, { status: 409 })
@@ -69,6 +60,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ country }, { status: 201 })
   } catch (error: any) {
     console.error('Create country error:', error)
-    return NextResponse.json({ error: 'Failed to create country' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to create country', message: error?.message, stack: error?.stack?.split('\n').slice(0, 5) },
+      { status: 500 }
+    )
   }
 }
