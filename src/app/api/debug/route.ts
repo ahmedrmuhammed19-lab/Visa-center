@@ -6,36 +6,36 @@ import { createClient } from '@libsql/client'
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
-  const env = {
-    DATABASE_URL: process.env.DATABASE_URL,
-    TURSO_DATABASE_URL_set: !!process.env.TURSO_DATABASE_URL,
-    TURSO_DATABASE_URL_starts_libsql: process.env.TURSO_DATABASE_URL?.startsWith('libsql://'),
-    DATABASE_AUTH_TOKEN_set: !!process.env.DATABASE_AUTH_TOKEN,
+  // Log all env vars that start with DATABASE or TURSO or JWT
+  const relevant: Record<string, any> = {}
+  for (const [k, v] of Object.entries(process.env)) {
+    if (k.includes('DATABASE') || k.includes('TURSO') || k.includes('JWT')) {
+      relevant[k] = v ? (v.length > 60 ? v.substring(0, 60) + '...' : v) : null
+    }
   }
   
-  // Try direct adapter approach (without our db.ts)
   let dbTest: any = null
   try {
-    const tursoUrl = process.env.TURSO_DATABASE_URL
-    const tursoToken = process.env.DATABASE_AUTH_TOKEN
+    // Use TURSO_DATABASE_URL with adapter
+    const tursoUrl = process.env.TURSO_DATABASE_URL!
+    const tursoToken = process.env.DATABASE_AUTH_TOKEN!
     
-    if (!tursoUrl || !tursoUrl.startsWith('libsql://') || !tursoToken) {
-      dbTest = { ok: false, reason: 'env vars missing', env }
+    if (!tursoUrl || !tursoToken) {
+      dbTest = { ok: false, reason: 'env missing' }
     } else {
       const libsql = createClient({ url: tursoUrl, authToken: tursoToken })
       const adapter = new PrismaLibSQL(libsql)
       const prisma = new PrismaClient({ adapter })
       const count = await prisma.country.count()
-      dbTest = { ok: true, count, usedAdapter: true }
+      dbTest = { ok: true, count }
     }
   } catch (e: any) {
-    dbTest = { 
-      ok: false, 
+    dbTest = {
+      ok: false,
       error: e?.message,
-      name: e?.name,
-      code: e?.code,
+      stack: e?.stack?.split('\n').slice(0, 8),
     }
   }
   
-  return NextResponse.json({ env, dbTest })
+  return NextResponse.json({ env: relevant, dbTest })
 }
