@@ -682,14 +682,14 @@ export default function Home() {
               Select a branch in {selectedCountry.flag} {selectedCountry.name}
             </Label>
             <Select value={selectedBranchId} onValueChange={setSelectedBranchId}>
-              <SelectTrigger className="h-12 text-base">
+              <SelectTrigger className="h-14 text-base glass-card input-glow rounded-xl">
                 <SelectValue placeholder="— Select a branch —" />
               </SelectTrigger>
               <SelectContent>
                 {selectedCountry.branches.map((b) => (
-                  <SelectItem key={b.id} value={b.id}>
-                    <span className="flex items-center gap-2.5">
-                      <span className="text-lg leading-none">{selectedCountry.flag}</span>
+                  <SelectItem key={b.id} value={b.id} className="py-3">
+                    <span className="flex items-center gap-3">
+                      <span className="text-xl leading-none">{selectedCountry.flag}</span>
                       <span>{b.name}</span>
                     </span>
                   </SelectItem>
