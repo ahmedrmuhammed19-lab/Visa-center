@@ -271,7 +271,7 @@ function BranchDetails({ branch, country, headOffice }: {
   const waUrl = waLink(waText)
 
   const copyAllData = useMemo(() => {
-    return `Address: ${branch.address}\n\nGoogle Maps: ${branch.mapLink || ''}\n\nWorking Hours:\n${branch.workingHours || ''}${branch.submissionHours ? '\n' + branch.submissionHours : ''}`
+    return `Address: ${branch.address}\n\nGoogle Maps: ${branch.mapLink || ''}${branch.submissionHours ? '\n\nSubmission Hours:\n' + branch.submissionHours : ''}`
   }, [branch])
 
   return (
