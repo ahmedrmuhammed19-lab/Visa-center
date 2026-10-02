@@ -194,11 +194,7 @@ function HeadOfficePill({ office }: { office: HeadOffice }) {
   const fullText = useMemo(() => {
     return `${office.labelAr} – Global EIS\n\n` +
       `📍 العنوان: ${office.addressAr}\n\n` +
-      `📍 الموقع: ${office.mapLink}\n\n` +
-      `ــــــــــــــــــــــ\n\n` +
-      `Global EIS – ${office.labelEn}\n\n` +
-      `📍 Address: ${office.addressEn}\n\n` +
-      `📍 Location: ${office.mapLink}`
+      `📍 الموقع: ${office.mapLink}`
   }, [office])
 
   const onCopy = async () => {
