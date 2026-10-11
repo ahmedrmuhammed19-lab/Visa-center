@@ -194,7 +194,9 @@ function HeadOfficePill({ office }: { office: HeadOffice }) {
   const fullText = useMemo(() => {
     return `${office.labelAr} – Global EIS\n\n` +
       `📍 العنوان: ${office.addressAr}\n\n` +
-      `📍 الموقع: ${office.mapLink}`
+      `📍 الموقع: ${office.mapLink}\n\n` +
+      `من السبت الي الخميس ما عدا الجمعة و الأجازات الرسمية.\n` +
+      `مواعيد العمل من الساعه 10 صباحاً حتي 7 مساءاً .`
   }, [office])
 
   const onCopy = async () => {
