@@ -267,8 +267,14 @@ function BranchDetails({ branch, country, headOffice }: {
   const waUrl = waLink(waText)
 
   const copyAllData = useMemo(() => {
-    return `Address: ${branch.address}\n\nGoogle Maps: ${branch.mapLink || ''}${branch.submissionHours ? '\n\nSubmission Hours:\n' + branch.submissionHours : ''}`
+    return `Address: ${branch.address}\n\nGoogle Maps: ${branch.mapLink || ''}`
   }, [branch])
+
+  // WhatsApp message for Send to Client card — matches what's shown on the card
+  const waClientText = useMemo(() => {
+    return `🌐 Global EIS — Visa Application Center\n\n📍 Address: ${branch.address}\n\n🗺️ Google Maps: ${branch.mapLink || ''}`
+  }, [branch])
+  const waClientUrl = waLink(waClientText)
 
   return (
     <div className="space-y-4 animate-fade-in-up">
@@ -424,18 +430,12 @@ function BranchDetails({ branch, country, headOffice }: {
                 </a>
               </div>
             )}
-            {branch.submissionHours && (
-              <div className="flex items-start gap-2">
-                <Clock className="h-3.5 w-3.5 mt-0.5 text-muted-foreground shrink-0" />
-                <span className="text-muted-foreground">{branch.submissionHours}</span>
-              </div>
-            )}
           </div>
 
           <div className="space-y-2">
             <CopyButton text={copyAllData} label="Copy Address + Location" size="md" />
             <a
-              href={waUrl}
+              href={waClientUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-whatsapp w-full h-10 inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium"
