@@ -272,7 +272,7 @@ function BranchDetails({ branch, country, headOffice }: {
 
   // WhatsApp message for Send to Client card — matches what's shown on the card
   const waClientText = useMemo(() => {
-    return `🌐 Global EIS — Visa Application Center\n\n📍 Address: ${branch.address}\n\n🗺️ Google Maps: ${branch.mapLink || ''}${branch.workingHours ? '\n\n📝 Submission: ' + branch.workingHours : ''}${branch.submissionHours ? '\n📦 ' + branch.submissionHours : ''}`
+    return `🌐 Global EIS — Visa Application Center\n\n📍 Address: ${branch.address}\n\n🗺️ Google Maps: ${branch.mapLink || ''}${branch.workingHours ? '\n\n📝 Submission: ' + branch.workingHours : ''}${branch.submissionHours ? '\n🛂 ' + branch.submissionHours : ''}`
   }, [branch])
   const waClientUrl = waLink(waClientText)
 
