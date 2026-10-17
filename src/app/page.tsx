@@ -283,13 +283,20 @@ function BranchDetails({ branch, country, headOffice }: {
   const copyAllData = useMemo(() => {
     // Schengen countries: client has scheduled appointment → exclude hours
     const includeHours = !isSchengen(country.name)
-    return `Address: ${branch.address}\n\nGoogle Maps: ${branch.mapLink || ''}${includeHours && branch.workingHours ? '\n\nSubmission: ' + branch.workingHours : ''}${includeHours && branch.submissionHours ? '\n' + branch.submissionHours : ''}`
+    // submissionHours may contain \n (literal) to separate submission + pickup
+    const clientHours = includeHours && branch.submissionHours
+      ? '\n\n' + branch.submissionHours.replace(/\\n/g, '\n')
+      : ''
+    return `Address: ${branch.address}\n\nGoogle Maps: ${branch.mapLink || ''}${clientHours}`
   }, [branch, country])
 
   // WhatsApp message for Send to Client card — matches copyAllData exactly
   const waClientText = useMemo(() => {
     const includeHours = !isSchengen(country.name)
-    return `📍 Address: ${branch.address}\n\n🗺️ Google Maps: ${branch.mapLink || ''}${includeHours && branch.workingHours ? '\n\n📝 Submission: ' + branch.workingHours : ''}${includeHours && branch.submissionHours ? '\n🛂 ' + branch.submissionHours : ''}`
+    const clientHours = includeHours && branch.submissionHours
+      ? '\n\n' + branch.submissionHours.replace(/\\n/g, '\n')
+      : ''
+    return `📍 Address: ${branch.address}\n\n🗺️ Google Maps: ${branch.mapLink || ''}${clientHours}`
   }, [branch, country])
   const waClientUrl = waLink(waClientText)
 
@@ -447,18 +454,19 @@ function BranchDetails({ branch, country, headOffice }: {
                 </a>
               </div>
             )}
-            {branch.workingHours && (
-              <div className="flex items-start gap-2">
-                <Clock className="h-3.5 w-3.5 mt-0.5 text-muted-foreground shrink-0" />
-                <span>Submission: {branch.workingHours}</span>
-              </div>
-            )}
-            {branch.submissionHours && (
-              <div className="flex items-start gap-2">
-                <Clock className="h-3.5 w-3.5 mt-0.5 text-muted-foreground shrink-0" />
-                <span className="text-muted-foreground">{branch.submissionHours}</span>
-              </div>
-            )}
+            {(() => {
+              // Schengen: no hours in Send to Client card
+              if (isSchengen(country.name)) return null
+              // Non-Schengen: show submissionHours (may contain \n for multiple lines)
+              if (!branch.submissionHours) return null
+              const lines = branch.submissionHours.replace(/\\n/g, '\n').split('\n').filter(l => l.trim())
+              return lines.map((line, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <Clock className="h-3.5 w-3.5 mt-0.5 text-muted-foreground shrink-0" />
+                  <span className={i > 0 ? 'text-muted-foreground' : ''}>{line}</span>
+                </div>
+              ))
+            })()}
           </div>
 
           <div className="space-y-2">
