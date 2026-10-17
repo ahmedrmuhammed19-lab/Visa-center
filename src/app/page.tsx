@@ -289,7 +289,7 @@ function BranchDetails({ branch, country, headOffice }: {
   // WhatsApp message for Send to Client card — matches copyAllData exactly
   const waClientText = useMemo(() => {
     const includeHours = !isSchengen(country.name)
-    return `🌐 Global EIS — Visa Application Center\n\n📍 Address: ${branch.address}\n\n🗺️ Google Maps: ${branch.mapLink || ''}${includeHours && branch.workingHours ? '\n\n📝 Submission: ' + branch.workingHours : ''}${includeHours && branch.submissionHours ? '\n🛂 ' + branch.submissionHours : ''}`
+    return `📍 Address: ${branch.address}\n\n🗺️ Google Maps: ${branch.mapLink || ''}${includeHours && branch.workingHours ? '\n\n📝 Submission: ' + branch.workingHours : ''}${includeHours && branch.submissionHours ? '\n🛂 ' + branch.submissionHours : ''}`
   }, [branch, country])
   const waClientUrl = waLink(waClientText)
 
