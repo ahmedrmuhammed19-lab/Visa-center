@@ -89,6 +89,20 @@ function isUrl(s?: string | null) {
   return /^https?:\/\//.test(s || '')
 }
 
+// Schengen countries: hours (Working/Submission) are excluded from client copy/WhatsApp
+// because clients already have a scheduled appointment.
+const SCHENGEN_COUNTRIES = new Set([
+  'France', 'Germany', 'Belgium', 'Luxembourg', 'Spain', 'Italy', 'Slovakia',
+  'Austria', 'Greece', 'Norway', 'Sweden', 'Switzerland', 'Netherlands', 'Malta',
+  'Denmark', 'Finland', 'Hungary', 'Portugal', 'Latvia', 'Lithuania', 'Croatia',
+  'Estonia', 'Iceland', 'Liechtenstein', 'Bulgaria', 'Romania', 'Poland',
+  'Slovenia', 'Czech',
+])
+
+function isSchengen(countryName: string): boolean {
+  return SCHENGEN_COUNTRIES.has(countryName)
+}
+
 function buildWhatsAppMessage(country: Country, b: Branch, headOffice: HeadOffice | null) {
   const lines = [
     `🌐 Global EIS — Visa Application Center`,
@@ -267,13 +281,16 @@ function BranchDetails({ branch, country, headOffice }: {
   const waUrl = waLink(waText)
 
   const copyAllData = useMemo(() => {
-    return `Address: ${branch.address}\n\nGoogle Maps: ${branch.mapLink || ''}${branch.workingHours ? '\n\nSubmission: ' + branch.workingHours : ''}${branch.submissionHours ? '\n' + branch.submissionHours : ''}`
-  }, [branch])
+    // Schengen countries: client has scheduled appointment → exclude hours
+    const includeHours = !isSchengen(country.name)
+    return `Address: ${branch.address}\n\nGoogle Maps: ${branch.mapLink || ''}${includeHours && branch.workingHours ? '\n\nSubmission: ' + branch.workingHours : ''}${includeHours && branch.submissionHours ? '\n' + branch.submissionHours : ''}`
+  }, [branch, country])
 
-  // WhatsApp message for Send to Client card — matches what's shown on the card
+  // WhatsApp message for Send to Client card — matches copyAllData exactly
   const waClientText = useMemo(() => {
-    return `🌐 Global EIS — Visa Application Center\n\n📍 Address: ${branch.address}\n\n🗺️ Google Maps: ${branch.mapLink || ''}${branch.workingHours ? '\n\n📝 Submission: ' + branch.workingHours : ''}${branch.submissionHours ? '\n🛂 ' + branch.submissionHours : ''}`
-  }, [branch])
+    const includeHours = !isSchengen(country.name)
+    return `🌐 Global EIS — Visa Application Center\n\n📍 Address: ${branch.address}\n\n🗺️ Google Maps: ${branch.mapLink || ''}${includeHours && branch.workingHours ? '\n\n📝 Submission: ' + branch.workingHours : ''}${includeHours && branch.submissionHours ? '\n🛂 ' + branch.submissionHours : ''}`
+  }, [branch, country])
   const waClientUrl = waLink(waClientText)
 
   return (
