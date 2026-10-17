@@ -372,17 +372,9 @@ function BranchDetails({ branch, country, headOffice }: {
 
             {/* Working hours */}
             {branch.workingHours && (
-              <div>
-                <div className="text-xs font-mono uppercase tracking-wider text-muted-foreground mb-1">Working Hours</div>
-                <div className="text-sm flex items-start gap-2">
-                  <Clock className="h-4 w-4 mt-0.5 text-[var(--brand-navy)] shrink-0" />
-                  <div>
-                    <div>{branch.workingHours}</div>
-                    {branch.submissionHours && (
-                      <div className="text-xs text-muted-foreground mt-0.5">{branch.submissionHours}</div>
-                    )}
-                  </div>
-                </div>
+              <div className="flex items-start gap-2">
+                <Clock className="h-3.5 w-3.5 mt-0.5 text-muted-foreground shrink-0" />
+                <span>{branch.workingHours}</span>
               </div>
             )}
 
